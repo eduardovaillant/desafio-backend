@@ -1,6 +1,7 @@
 import { AddPlanetController } from '../../../src/presentation/controllers'
 import { badRequest, serverError } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
+import { AddPlanetSpy } from '../../domain/usecases/add-planet'
 import { ValidationSpy } from '../mocks/validation'
 
 const mockPlanet = (): any => (
@@ -20,19 +21,22 @@ const mockRequest = (): HttpRequest => (
 interface SutTypes {
   sut: AddPlanetController
   validationSpy: ValidationSpy
+  addPlanetSpy: AddPlanetSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new AddPlanetController(validationSpy)
+  const addPlanetSpy = new AddPlanetSpy()
+  const sut = new AddPlanetController(validationSpy, addPlanetSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    addPlanetSpy
   }
 }
 
 describe('AddPlanetController', () => {
-  test('should call validation with correct values', async () => {
+  test('should call Validation with correct values', async () => {
     const { sut, validationSpy } = makeSut()
     await sut.handle(mockRequest())
     expect(validationSpy.input).toEqual(mockPlanet())
@@ -50,5 +54,11 @@ describe('AddPlanetController', () => {
     jest.spyOn(validationSpy, 'validate').mockImplementationOnce(() => { throw new Error() })
     const response = await sut.handle(mockRequest())
     expect(response).toEqual(serverError(new Error()))
+  })
+
+  test('should call AddPlanet with correct values', async () => {
+    const { sut, addPlanetSpy } = makeSut()
+    await sut.handle(mockRequest())
+    expect(addPlanetSpy.planet).toEqual(mockPlanet())
   })
 })
