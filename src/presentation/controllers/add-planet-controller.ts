@@ -1,5 +1,5 @@
 import { Controller, HttpRequest, HttpResponse, Validation } from '../protocols'
-import { badRequest, serverError } from '../helpers'
+import { badRequest, created, serverError } from '../helpers'
 import { AddPlanet } from '../../domain/usecases/add-planet'
 
 export class AddPlanetController implements Controller {
@@ -10,13 +10,13 @@ export class AddPlanetController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const planet = httpRequest.body
-      const error = this.validation.validate(planet)
+      const planetParams = httpRequest.body
+      const error = this.validation.validate(planetParams)
       if (error) {
         return badRequest(new Error())
       }
-      await this.addPlanet.add(planet)
-      return null
+      const planet = await this.addPlanet.add(planetParams)
+      return created(planet)
     } catch (error) {
       return serverError(error)
     }
