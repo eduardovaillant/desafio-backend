@@ -1,4 +1,5 @@
 import { AddPlanetController } from '../../../src/presentation/controllers'
+import { badRequest } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { ValidationSpy } from '../mocks/validation'
 
@@ -35,5 +36,12 @@ describe('AddPlanetController', () => {
     const { sut, validationSpy } = makeSut()
     await sut.handle(mockRequest())
     expect(validationSpy.input).toEqual(mockPlanet())
+  })
+
+  test('should return 400 if Validation fails', async () => {
+    const { sut, validationSpy } = makeSut()
+    validationSpy.result = true
+    const response = await sut.handle(mockRequest())
+    expect(response).toEqual(badRequest(new Error()))
   })
 })
