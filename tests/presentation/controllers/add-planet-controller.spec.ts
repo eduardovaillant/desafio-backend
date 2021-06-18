@@ -61,4 +61,11 @@ describe('AddPlanetController', () => {
     await sut.handle(mockRequest())
     expect(addPlanetSpy.planet).toEqual(mockPlanet())
   })
+
+  test('should throw if AddPlanet throws', async () => {
+    const { sut, addPlanetSpy } = makeSut()
+    jest.spyOn(addPlanetSpy, 'add').mockImplementationOnce(() => { throw new Error() })
+    const response = await sut.handle(mockRequest())
+    expect(response).toEqual(serverError(new Error()))
+  })
 })
