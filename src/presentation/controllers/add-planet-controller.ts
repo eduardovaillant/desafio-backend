@@ -1,4 +1,5 @@
 import { Controller, HttpRequest, HttpResponse, Validation } from '../protocols'
+import { badRequest } from '../helpers'
 
 export class AddPlanetController implements Controller {
   constructor (
@@ -6,7 +7,10 @@ export class AddPlanetController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    this.validation.validate(httpRequest.body)
+    const error = this.validation.validate(httpRequest.body)
+    if (error) {
+      return badRequest(new Error())
+    }
     return await Promise.resolve(null)
   }
 }
