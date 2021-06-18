@@ -3,11 +3,11 @@ import { PlanetModel } from '../../../src/domain/models'
 import { mockPlanetModel } from '../mocks/planet'
 
 export class AddPlanetSpy implements AddPlanet {
-  planet: AddPlanetParams
+  addPlanetParams: AddPlanetParams
   planetModel: PlanetModel = mockPlanetModel()
 
-  async add (planet: AddPlanetParams): Promise<PlanetModel> {
-    this.planet = planet
+  async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
+    this.addPlanetParams = addPlanetParams
     return this.planetModel
   }
 }

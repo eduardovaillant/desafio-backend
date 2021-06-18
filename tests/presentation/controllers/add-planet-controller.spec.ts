@@ -1,21 +1,13 @@
 import { AddPlanetController } from '../../../src/presentation/controllers'
 import { badRequest, serverError, created } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
-import { mockPlanetModel } from '../../domain/mocks/planet'
+import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { AddPlanetSpy } from '../../domain/usecases/add-planet'
 import { ValidationSpy } from '../mocks/validation'
 
-const mockPlanet = (): any => (
-  {
-    name: 'any_name',
-    climante: 'any_climate',
-    terrain: 'any_terrain'
-  }
-)
-
 const mockRequest = (): HttpRequest => (
   {
-    body: mockPlanet()
+    body: mockAddPlanetParams()
   }
 )
 
@@ -40,7 +32,7 @@ describe('AddPlanetController', () => {
   test('should call Validation with correct values', async () => {
     const { sut, validationSpy } = makeSut()
     await sut.handle(mockRequest())
-    expect(validationSpy.input).toEqual(mockPlanet())
+    expect(validationSpy.input).toEqual(mockAddPlanetParams())
   })
 
   test('should return 400 if Validation fails', async () => {
@@ -60,7 +52,7 @@ describe('AddPlanetController', () => {
   test('should call AddPlanet with correct values', async () => {
     const { sut, addPlanetSpy } = makeSut()
     await sut.handle(mockRequest())
-    expect(addPlanetSpy.planet).toEqual(mockPlanet())
+    expect(addPlanetSpy.addPlanetParams).toEqual(mockAddPlanetParams())
   })
 
   test('should return 500 AddPlanet throws', async () => {
