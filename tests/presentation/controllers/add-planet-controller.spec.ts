@@ -49,7 +49,7 @@ describe('AddPlanetController', () => {
     expect(response).toEqual(badRequest(new Error()))
   })
 
-  test('should throw if Validation throws', async () => {
+  test('should return 500 if Validation throws', async () => {
     const { sut, validationSpy } = makeSut()
     jest.spyOn(validationSpy, 'validate').mockImplementationOnce(() => { throw new Error() })
     const response = await sut.handle(mockRequest())
@@ -62,7 +62,7 @@ describe('AddPlanetController', () => {
     expect(addPlanetSpy.planet).toEqual(mockPlanet())
   })
 
-  test('should throw if AddPlanet throws', async () => {
+  test('should return 500 AddPlanet throws', async () => {
     const { sut, addPlanetSpy } = makeSut()
     jest.spyOn(addPlanetSpy, 'add').mockImplementationOnce(() => { throw new Error() })
     const response = await sut.handle(mockRequest())
