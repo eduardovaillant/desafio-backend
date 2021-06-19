@@ -1,4 +1,4 @@
-import { mockSwapiReturn } from '../../data/mocks/swapi-client'
+import { mockSwapiPlanetReturn, mockSwapiReturn } from '../../data/mocks/swapi-client'
 import { SwapiClientImpl } from '../../../src/infra/clients/swapi-client'
 
 import axios from 'axios'
@@ -40,5 +40,11 @@ describe('SwapiClient', () => {
     ))
     const result = await sut.search('any_name')
     expect(result).toBeNull()
+  })
+
+  test('should return the SwapiPlanetReturn on success', async () => {
+    const { sut } = makeSut()
+    const result = await sut.search('any_name')
+    expect(result).toEqual(mockSwapiPlanetReturn())
   })
 })
