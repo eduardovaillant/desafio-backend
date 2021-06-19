@@ -37,7 +37,7 @@ describe('AddPlanetController', () => {
 
   test('should return 400 if Validation fails', async () => {
     const { sut, validationSpy } = makeSut()
-    validationSpy.result = true
+    validationSpy.result = new Error()
     const response = await sut.handle(mockRequest())
     expect(response).toEqual(badRequest(new Error()))
   })
