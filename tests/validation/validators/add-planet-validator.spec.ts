@@ -21,4 +21,13 @@ describe('AddPlanetValidator', () => {
     })
     expect(result).toEqual(new RequiredParamError('name'))
   })
+
+  test('should return a RequiredParamError if no climate is provided', () => {
+    const { sut } = makeSut()
+    const result = sut.validate({
+      name: 'any_name',
+      terrain: 'any_terrain'
+    })
+    expect(result).toEqual(new RequiredParamError('climate'))
+  })
 })
