@@ -14,5 +14,7 @@ export class AddPlanetValidator implements Validation {
     if (!input.terrain) {
       return new RequiredParamError('terrain')
     }
+
+    return null
   }
 }
