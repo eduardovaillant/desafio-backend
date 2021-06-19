@@ -19,7 +19,7 @@ export class AddPlanetController implements Controller {
       return created(planet)
     } catch (error) {
       console.error(error)
-      if (error.name === 'InvalidPlanetDataError') {
+      if (error.name === 'InvalidPlanetDataError' || error.name === 'PlanetAlreadyExistsError') {
         return forbidden(error)
       }
       return serverError(error)
