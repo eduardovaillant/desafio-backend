@@ -71,6 +71,15 @@ describe('AddPlanetController', () => {
     expect(response).toEqual(forbidden(error))
   })
 
+  test('should return 403 if AddPlanet throws a PlanetAlreadyExistsError', async () => {
+    const { sut, addPlanetSpy } = makeSut()
+    const error = new Error()
+    error.name = 'PlanetAlreadyExistsError'
+    jest.spyOn(addPlanetSpy, 'add').mockImplementationOnce(() => { throw error })
+    const response = await sut.handle(mockRequest())
+    expect(response).toEqual(forbidden(error))
+  })
+
   test('should return 201 on success', async () => {
     const { sut } = makeSut()
     const response = await sut.handle(mockRequest())
