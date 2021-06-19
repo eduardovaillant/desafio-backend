@@ -11,7 +11,7 @@ const mockRequest = (): HttpRequest => (
   }
 )
 
-interface SutTypes {
+type SutTypes = {
   sut: AddPlanetController
   validationSpy: ValidationSpy
   addPlanetSpy: AddPlanetSpy
