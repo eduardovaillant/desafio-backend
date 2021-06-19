@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/eduardovaillant/twitter-parser#readme",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.5",
     "@types/jest": "^26.0.20",
     "@types/mongodb": "^3.6.18",
     "@types/node": "^14.14.25",
