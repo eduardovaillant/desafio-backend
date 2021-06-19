@@ -15,8 +15,6 @@ export class SwapiClientImpl implements SwapiClient {
       movie_apparitions: response.data.results[0].films.length
     }
 
-    console.log(swapiPlanetReturn)
-
     return swapiPlanetReturn
   }
 }

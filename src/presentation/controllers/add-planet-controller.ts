@@ -1,5 +1,5 @@
 import { Controller, HttpRequest, HttpResponse, Validation } from '../protocols'
-import { badRequest, created, serverError } from '../helpers'
+import { badRequest, created, serverError, forbidden } from '../helpers'
 import { AddPlanet } from '../../domain/usecases'
 
 export class AddPlanetController implements Controller {
@@ -19,6 +19,9 @@ export class AddPlanetController implements Controller {
       return created(planet)
     } catch (error) {
       console.error(error)
+      if (error.name === 'InvalidPlanetDataError') {
+        return forbidden(error)
+      }
       return serverError(error)
     }
   }
