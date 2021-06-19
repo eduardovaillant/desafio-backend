@@ -1,6 +1,6 @@
 import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
-import { AddPlanetRepository, LoadPlanetByNameRepository } from '../protocols'
+import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByNameRepository } from '../protocols'
 import { SwapiClient } from '../protocols/swapi-client'
 import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError } from '../errors'
 
@@ -12,7 +12,7 @@ export class DbAddPlanet implements AddPlanet {
   ) {}
 
   async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
-    const loadedPlanet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name)
+    const loadedPlanet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name.toLowerCase())
     if (loadedPlanet) {
       return null
     }
@@ -34,7 +34,12 @@ export class DbAddPlanet implements AddPlanet {
       throw new InvalidPlanetClimateError()
     }
 
-    const addPlanetRepositoryParams = Object.assign(addPlanetParams, { movie_apparitions: result.movie_apparitions })
+    const addPlanetRepositoryParams: AddPlanetRepositoryParams = {
+      name: addPlanetParams.name.toLowerCase(),
+      climate: addPlanetParams.climate.toLowerCase(),
+      terrain: addPlanetParams.terrain.toLowerCase(),
+      movie_apparitions: result.movie_apparitions
+    }
 
     const createdPlanet = await this.addPlanetRepository.add(addPlanetRepositoryParams)
 
