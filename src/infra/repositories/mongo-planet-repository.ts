@@ -6,6 +6,7 @@ export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByN
   async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
     const result = await planetsCollection.insertOne(addPlanetRepositoryParams)
+    // TODO testar se realmente retornou algo
     return MongoHelper.map(result.ops[0])
   }
 
