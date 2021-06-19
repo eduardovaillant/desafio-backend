@@ -1,5 +1,5 @@
 import { DbAddPlanet } from '../../../src/presentation/data/usecases/db-add-planet'
-import { mockAddPlanetParams } from '../../domain/mocks/planet'
+import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
 
 type SutTypes = {
@@ -21,5 +21,12 @@ describe('DbAddPlanet', () => {
     const { sut, loadPlanetByNameRepositorySpy } = makeSut()
     await sut.add(mockAddPlanetParams())
     expect(loadPlanetByNameRepositorySpy.name).toBe(mockAddPlanetParams().name)
+  })
+
+  test('should return null if the planet already exists', async () => {
+    const { sut, loadPlanetByNameRepositorySpy } = makeSut()
+    loadPlanetByNameRepositorySpy.planet = mockPlanetModel()
+    const result = await sut.add(mockAddPlanetParams())
+    expect(result).toBeNull()
   })
 })
