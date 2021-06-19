@@ -33,4 +33,14 @@ describe('MongoPlanetRepository', () => {
       expect(planet.name).toBe('any_name')
     })
   })
+
+  describe('loadByName()', () => {
+    test('should return the planet if the planet existis in the database ', async () => {
+      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+      const sut = makeSut()
+      const planet = await sut.loadByName('any_name')
+      expect(planet.id).toBeTruthy()
+      expect(planet.name).toBe('any_name')
+    })
+  })
 })
