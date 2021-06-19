@@ -1,4 +1,4 @@
-import { InvalidaPlanetTerrainError, InvalidaPlanetNameError } from '../../../src/data/errors'
+import { InvalidPlanetTerrainError, InvalidPlanetNameError } from '../../../src/data/errors'
 import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
@@ -45,13 +45,13 @@ describe('DbAddPlanet', () => {
     const { sut, swapiClientSpy } = makeSut()
     swapiClientSpy.swapiPlanetReturn = null
     const promise = sut.add(mockAddPlanetParams())
-    await expect(promise).rejects.toThrow(new InvalidaPlanetNameError())
+    await expect(promise).rejects.toThrow(new InvalidPlanetNameError())
   })
 
   test('should throw a InvalidPlanetTerrainError if the terrain is invalid', async () => {
     const { sut, swapiClientSpy } = makeSut()
     swapiClientSpy.swapiPlanetReturn.terrain = 'diferent_terrain'
     const promise = sut.add(mockAddPlanetParams())
-    await expect(promise).rejects.toThrow(new InvalidaPlanetTerrainError())
+    await expect(promise).rejects.toThrow(new InvalidPlanetTerrainError())
   })
 })
