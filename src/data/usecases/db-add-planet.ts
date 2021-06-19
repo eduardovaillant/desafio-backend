@@ -22,6 +22,10 @@ export class DbAddPlanet implements AddPlanet {
       throw new InvalidPlanetNameError()
     }
 
+    if (result.name !== addPlanetParams.name) {
+      throw new InvalidPlanetNameError()
+    }
+
     if (result.terrain !== addPlanetParams.terrain) {
       throw new InvalidPlanetTerrainError()
     }
