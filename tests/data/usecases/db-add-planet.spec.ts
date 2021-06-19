@@ -77,4 +77,10 @@ describe('DbAddPlanet', () => {
     const promise = sut.add(mockAddPlanetParams())
     await expect(promise).rejects.toThrow()
   })
+
+  test('should return the created planet on success', async () => {
+    const { sut } = makeSut()
+    const result = await sut.add(mockAddPlanetParams())
+    expect(result).toEqual(mockPlanetModel())
+  })
 })
