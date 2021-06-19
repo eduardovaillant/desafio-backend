@@ -8,7 +8,7 @@ export class DbLoadPlanetByName implements LoadPlanetByName {
   ) {}
 
   async loadByName (name: string): Promise<PlanetModel> {
-    await this.loadPlanetByNameRepository.loadByName(name.toLowerCase())
-    return null
+    const planet = await this.loadPlanetByNameRepository.loadByName(name.toLowerCase())
+    return planet
   }
 }
