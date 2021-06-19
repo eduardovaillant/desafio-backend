@@ -1,4 +1,4 @@
-import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError } from '../../../src/data/errors'
+import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../../../src/data/errors'
 import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { AddPlanetRepositorySpy, LoadPlanetByNameRepositorySpy, mockAddPlanetRepositoryParams } from '../mocks/repositories'
@@ -31,11 +31,11 @@ describe('DbAddPlanet', () => {
     expect(loadPlanetByNameRepositorySpy.name).toBe(mockAddPlanetParams().name)
   })
 
-  test('should return null if the planet already exists', async () => {
+  test('should throw a PlanetAlreadyExistsError if the planet already exists', async () => {
     const { sut, loadPlanetByNameRepositorySpy } = makeSut()
     loadPlanetByNameRepositorySpy.planet = mockPlanetModel()
-    const result = await sut.add(mockAddPlanetParams())
-    expect(result).toBeNull()
+    const promise = sut.add(mockAddPlanetParams())
+    await expect(promise).rejects.toThrow(new PlanetAlreadyExistsError())
   })
 
   test('should call SwapiClient with correct values', async () => {
