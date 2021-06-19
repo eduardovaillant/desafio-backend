@@ -70,4 +70,11 @@ describe('DbAddPlanet', () => {
     await sut.add(mockAddPlanetParams())
     expect(addPlanetRepositorySpy.addPlanetRepositoryParams).toEqual(mockAddPlanetRepositoryParams())
   })
+
+  test('should call throw if AddPlanetRepository throws', async () => {
+    const { sut, addPlanetRepositorySpy } = makeSut()
+    jest.spyOn(addPlanetRepositorySpy, 'add').mockImplementationOnce(() => { throw new Error() })
+    const promise = sut.add(mockAddPlanetParams())
+    await expect(promise).rejects.toThrow()
+  })
 })
