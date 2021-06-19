@@ -1,5 +1,5 @@
 import { MongoHelper } from '../../../src/infra/helpers'
-import { MongoPlanetRepository } from '../../../src/infra/repositories/mongo-planet-repository'
+import { MongoPlanetRepository } from '../../../src/infra/repositories'
 import { mockAddPlanetRepositoryParams } from '../../data/mocks/repositories'
 
 import { Collection } from 'mongodb'
