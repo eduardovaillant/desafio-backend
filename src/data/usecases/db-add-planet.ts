@@ -2,7 +2,7 @@ import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
 import { LoadPlanetByNameRepository } from '../protocols'
 import { SwapiClient } from '../protocols/swapi-client'
-import { InvalidPlanetTerrainError, InvalidPlanetNameError } from '../errors'
+import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError } from '../errors'
 
 export class DbAddPlanet implements AddPlanet {
   constructor (
@@ -22,6 +22,10 @@ export class DbAddPlanet implements AddPlanet {
 
     if (result.terrain !== addPlanetParams.terrain) {
       throw new InvalidPlanetTerrainError()
+    }
+
+    if (result.climate !== addPlanetParams.climate) {
+      throw new InvalidPlanetClimateError()
     }
 
     return null
