@@ -1,4 +1,5 @@
 import { DbLoadPlanetByName } from '../../../src/data/usecases'
+import { mockPlanetModel } from '../../domain/mocks/planet'
 import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
 
 type SutTypes = {
@@ -27,5 +28,12 @@ describe('DbLoadPlanetByName', () => {
     jest.spyOn(loadPlanetByNameRepositorySpy, 'loadByName').mockImplementationOnce(() => { throw new Error() })
     const promise = sut.loadByName('any_name')
     await expect(promise).rejects.toThrow()
+  })
+
+  test('should return the LoadPlanetByNameRepository result on success', async () => {
+    const { sut, loadPlanetByNameRepositorySpy } = makeSut()
+    loadPlanetByNameRepositorySpy.planet = mockPlanetModel()
+    const result = await sut.loadByName('any_name')
+    expect(result).toEqual(mockPlanetModel())
   })
 })
