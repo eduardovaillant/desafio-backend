@@ -1,11 +1,11 @@
-import { mockSwapiPlanetReturn } from '../../data/mocks/swapi-client'
+import { mockSwapiReturn } from '../../data/mocks/swapi-client'
 import { SwapiClientImpl } from '../../../src/infra/clients/swapi-client'
 
 import axios from 'axios'
 
 jest.mock('axios', () => ({
   async get (): Promise<any> {
-    return Promise.resolve({ data: mockSwapiPlanetReturn() })
+    return Promise.resolve({ data: mockSwapiReturn() })
   }
 }))
 
@@ -27,5 +27,18 @@ describe('SwapiClient', () => {
     const getSpy = jest.spyOn(axios, 'get')
     await sut.search('any_name')
     expect(getSpy).toHaveBeenCalledWith(url)
+  })
+
+  test('should return null if the swapi results is empty', async () => {
+    const { sut } = makeSut()
+    jest.spyOn(axios, 'get').mockReturnValueOnce(Promise.resolve(
+      {
+        data: {
+          results: []
+        }
+      }
+    ))
+    const result = await sut.search('any_name')
+    expect(result).toBeNull()
   })
 })
