@@ -1,3 +1,4 @@
+import { InvalidaPlanetNameError } from '../errors/invalid-planet-name-error'
 import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
 import { LoadPlanetByNameRepository } from '../protocols'
@@ -10,11 +11,15 @@ export class DbAddPlanet implements AddPlanet {
   ) {}
 
   async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
-    const planet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name)
-    if (planet) {
+    const loadedPlanet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name)
+    if (loadedPlanet) {
       return null
     }
-    await this.swapiClient.search(addPlanetParams.name)
+    const result = await this.swapiClient.search(addPlanetParams.name)
+    if (!result) {
+      throw new InvalidaPlanetNameError()
+    }
+
     return null
   }
 }
