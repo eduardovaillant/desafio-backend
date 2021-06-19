@@ -8,7 +8,10 @@ export class DbAddPlanet implements AddPlanet {
   ) {}
 
   async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
-    await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name)
-    return Promise.resolve(null)
+    const planet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name)
+    if (planet) {
+      return null
+    }
+    return null
   }
 }

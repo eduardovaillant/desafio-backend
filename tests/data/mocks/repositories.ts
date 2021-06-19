@@ -1,9 +1,8 @@
 import { PlanetModel } from '../../../src/domain/models'
 import { LoadPlanetByNameRepository } from '../../../src/presentation/data/protocols'
-import { mockPlanetModel } from '../../domain/mocks/planet'
 
 export class LoadPlanetByNameRepositorySpy implements LoadPlanetByNameRepository {
-  planet: PlanetModel = mockPlanetModel()
+  planet: PlanetModel = null
   name: string
 
   async loadByName (name: string): Promise<PlanetModel> {
