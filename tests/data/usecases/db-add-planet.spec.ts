@@ -1,23 +1,26 @@
 import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError } from '../../../src/data/errors'
 import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
-import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
+import { AddPlanetRepositorySpy, LoadPlanetByNameRepositorySpy, mockAddPlanetRepositoryParams } from '../mocks/repositories'
 import { SwapiClientSpy } from '../mocks/swapi-client'
 
 type SutTypes = {
   sut: DbAddPlanet
   loadPlanetByNameRepositorySpy: LoadPlanetByNameRepositorySpy
   swapiClientSpy: SwapiClientSpy
+  addPlanetRepositorySpy: AddPlanetRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const loadPlanetByNameRepositorySpy = new LoadPlanetByNameRepositorySpy()
   const swapiClientSpy = new SwapiClientSpy()
-  const sut = new DbAddPlanet(loadPlanetByNameRepositorySpy, swapiClientSpy)
+  const addPlanetRepositorySpy = new AddPlanetRepositorySpy()
+  const sut = new DbAddPlanet(loadPlanetByNameRepositorySpy, swapiClientSpy, addPlanetRepositorySpy)
   return {
     sut,
     loadPlanetByNameRepositorySpy,
-    swapiClientSpy
+    swapiClientSpy,
+    addPlanetRepositorySpy
   }
 }
 
@@ -60,5 +63,11 @@ describe('DbAddPlanet', () => {
     swapiClientSpy.swapiPlanetReturn.climate = 'diferent_climate'
     const promise = sut.add(mockAddPlanetParams())
     await expect(promise).rejects.toThrow(new InvalidPlanetClimateError())
+  })
+
+  test('should call AddPlanetRepository with correct values', async () => {
+    const { sut, addPlanetRepositorySpy } = makeSut()
+    await sut.add(mockAddPlanetParams())
+    expect(addPlanetRepositorySpy.addPlanetRepositoryParams).toEqual(mockAddPlanetRepositoryParams())
   })
 })
