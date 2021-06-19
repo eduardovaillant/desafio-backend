@@ -7,6 +7,17 @@ export const mockSwapiPlanetReturn = (): SwapiPlanetReturn => ({
   movie_apparitions: 1
 })
 
+export const mockSwapiReturn = (): any => ({
+  results: [
+    {
+      name: 'any_name',
+      terrain: 'any_terrain',
+      climate: 'any_climate',
+      films: ['movie_one']
+    }
+  ]
+})
+
 export class SwapiClientSpy implements SwapiClient {
   swapiPlanetReturn: SwapiPlanetReturn = mockSwapiPlanetReturn()
   name: string
