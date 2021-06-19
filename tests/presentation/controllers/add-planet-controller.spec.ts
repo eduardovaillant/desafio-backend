@@ -1,5 +1,5 @@
 import { AddPlanetController } from '../../../src/presentation/controllers'
-import { badRequest, serverError, created } from '../../../src/presentation/helpers'
+import { badRequest, serverError, created, forbidden } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { AddPlanetSpy } from '../../domain/usecases/add-planet'
@@ -60,6 +60,15 @@ describe('AddPlanetController', () => {
     jest.spyOn(addPlanetSpy, 'add').mockImplementationOnce(() => { throw new Error() })
     const response = await sut.handle(mockRequest())
     expect(response).toEqual(serverError(new Error()))
+  })
+
+  test('should return 403 if AddPlanet throws a InvalidPlanetDataError', async () => {
+    const { sut, addPlanetSpy } = makeSut()
+    const error = new Error()
+    error.name = 'InvalidPlanetDataError'
+    jest.spyOn(addPlanetSpy, 'add').mockImplementationOnce(() => { throw error })
+    const response = await sut.handle(mockRequest())
+    expect(response).toEqual(forbidden(error))
   })
 
   test('should return 201 on success', async () => {
