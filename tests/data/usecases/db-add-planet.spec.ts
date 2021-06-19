@@ -51,6 +51,13 @@ describe('DbAddPlanet', () => {
     await expect(promise).rejects.toThrow(new InvalidPlanetNameError())
   })
 
+  test('should throw a InvalidPlanetNameError if the name is invalid', async () => {
+    const { sut, swapiClientSpy } = makeSut()
+    swapiClientSpy.swapiPlanetReturn.name = 'diferent_name'
+    const promise = sut.add(mockAddPlanetParams())
+    await expect(promise).rejects.toThrow(new InvalidPlanetNameError())
+  })
+
   test('should throw a InvalidPlanetTerrainError if the terrain is invalid', async () => {
     const { sut, swapiClientSpy } = makeSut()
     swapiClientSpy.swapiPlanetReturn.terrain = 'diferent_terrain'
