@@ -1,5 +1,5 @@
 import { PlanetModel } from '../../../src/domain/models'
-import { LoadPlanetByNameRepository } from '../../../src/presentation/data/protocols'
+import { LoadPlanetByNameRepository } from '../../../src/data/protocols'
 
 export class LoadPlanetByNameRepositorySpy implements LoadPlanetByNameRepository {
   planet: PlanetModel = null

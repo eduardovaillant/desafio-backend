@@ -1,5 +1,5 @@
-import { PlanetModel } from '../../../domain/models'
-import { AddPlanet, AddPlanetParams } from '../../../domain/usecases'
+import { PlanetModel } from '../../domain/models'
+import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
 import { LoadPlanetByNameRepository } from '../protocols'
 
 export class DbAddPlanet implements AddPlanet {

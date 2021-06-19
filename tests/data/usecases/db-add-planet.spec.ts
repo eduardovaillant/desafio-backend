@@ -1,4 +1,4 @@
-import { DbAddPlanet } from '../../../src/presentation/data/usecases/db-add-planet'
+import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
 
