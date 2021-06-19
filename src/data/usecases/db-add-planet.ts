@@ -1,8 +1,8 @@
-import { InvalidaPlanetNameError } from '../errors/invalid-planet-name-error'
 import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
 import { LoadPlanetByNameRepository } from '../protocols'
 import { SwapiClient } from '../protocols/swapi-client'
+import { InvalidaPlanetTerrainError, InvalidaPlanetNameError } from '../errors'
 
 export class DbAddPlanet implements AddPlanet {
   constructor (
@@ -18,6 +18,10 @@ export class DbAddPlanet implements AddPlanet {
     const result = await this.swapiClient.search(addPlanetParams.name)
     if (!result) {
       throw new InvalidaPlanetNameError()
+    }
+
+    if (result.terrain !== addPlanetParams.terrain) {
+      throw new InvalidaPlanetTerrainError()
     }
 
     return null
