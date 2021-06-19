@@ -1,3 +1,4 @@
+import { InvalidaPlanetNameError } from '../../../src/data/errors/invalid-planet-name-error'
 import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
@@ -38,5 +39,12 @@ describe('DbAddPlanet', () => {
     const { sut, swapiClientSpy } = makeSut()
     await sut.add(mockAddPlanetParams())
     expect(swapiClientSpy.name).toBe(mockAddPlanetParams().name)
+  })
+
+  test('should throw a InvalidPlanetNameError if SwapiClient returns null', async () => {
+    const { sut, swapiClientSpy } = makeSut()
+    swapiClientSpy.swapiPlanetReturn = null
+    const promise = sut.add(mockAddPlanetParams())
+    await expect(promise).rejects.toThrow(new InvalidaPlanetNameError())
   })
 })
