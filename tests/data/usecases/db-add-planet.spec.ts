@@ -1,18 +1,22 @@
 import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
 import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
+import { SwapiClientSpy } from '../mocks/swapi-client'
 
 type SutTypes = {
   sut: DbAddPlanet
   loadPlanetByNameRepositorySpy: LoadPlanetByNameRepositorySpy
+  swapiClientSpy: SwapiClientSpy
 }
 
 const makeSut = (): SutTypes => {
   const loadPlanetByNameRepositorySpy = new LoadPlanetByNameRepositorySpy()
-  const sut = new DbAddPlanet(loadPlanetByNameRepositorySpy)
+  const swapiClientSpy = new SwapiClientSpy()
+  const sut = new DbAddPlanet(loadPlanetByNameRepositorySpy, swapiClientSpy)
   return {
     sut,
-    loadPlanetByNameRepositorySpy
+    loadPlanetByNameRepositorySpy,
+    swapiClientSpy
   }
 }
 
@@ -28,5 +32,11 @@ describe('DbAddPlanet', () => {
     loadPlanetByNameRepositorySpy.planet = mockPlanetModel()
     const result = await sut.add(mockAddPlanetParams())
     expect(result).toBeNull()
+  })
+
+  test('should call SwapiClient with correct values', async () => {
+    const { sut, swapiClientSpy } = makeSut()
+    await sut.add(mockAddPlanetParams())
+    expect(swapiClientSpy.name).toBe(mockAddPlanetParams().name)
   })
 })
