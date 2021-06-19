@@ -13,11 +13,12 @@ export class AddPlanetController implements Controller {
       const addPlanetParams = httpRequest.body
       const error = this.validation.validate(addPlanetParams)
       if (error) {
-        return badRequest(new Error())
+        return badRequest(error)
       }
       const planet = await this.addPlanet.add(addPlanetParams)
       return created(planet)
     } catch (error) {
+      console.error(error)
       return serverError(error)
     }
   }
