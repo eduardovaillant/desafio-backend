@@ -32,8 +32,8 @@ export class DbAddPlanet implements AddPlanet {
 
     const addPlanetRepositoryParams = Object.assign(addPlanetParams, { movie_apparitions: result.movie_apparitions })
 
-    await this.addPlanetRepository.add(addPlanetRepositoryParams)
+    const createdPlanet = await this.addPlanetRepository.add(addPlanetRepositoryParams)
 
-    return null
+    return createdPlanet
   }
 }
