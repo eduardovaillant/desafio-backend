@@ -6,5 +6,9 @@ export class AddPlanetValidator implements Validation {
     if (!input.name) {
       return new RequiredParamError('name')
     }
+
+    if (!input.climate) {
+      return new RequiredParamError('climate')
+    }
   }
 }
