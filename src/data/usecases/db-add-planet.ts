@@ -2,7 +2,7 @@ import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
 import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByNameRepository } from '../protocols'
 import { SwapiClient } from '../protocols/swapi-client'
-import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError } from '../errors'
+import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../errors'
 
 export class DbAddPlanet implements AddPlanet {
   constructor (
@@ -14,7 +14,7 @@ export class DbAddPlanet implements AddPlanet {
   async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
     const loadedPlanet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name.toLowerCase())
     if (loadedPlanet) {
-      return null
+      throw new PlanetAlreadyExistsError()
     }
 
     const result = await this.swapiClient.search(addPlanetParams.name)
