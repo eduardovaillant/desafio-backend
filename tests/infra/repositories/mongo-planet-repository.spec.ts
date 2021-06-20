@@ -61,7 +61,7 @@ describe('MongoPlanetRepository', () => {
 
     test('should return null if the planet does not exists in the database', async () => {
       const sut = makeSut()
-      const planet = await sut.loadByName('any_name')
+      const planet = await sut.loadById('60cf8952bc34198556cdd426')
       expect(planet).toBeNull()
     })
   })
@@ -83,11 +83,17 @@ describe('MongoPlanetRepository', () => {
   })
 
   describe('remove()', () => {
-    test('should return true if the planets was deleted', async () => {
+    test('should return true if the planet was deleted', async () => {
       const createdPlanet = await planetCollection.insertOne(mockAddPlanetRepositoryParams())
       const sut = makeSut()
       const removed = await sut.remove(createdPlanet.ops[0]._id)
       expect(removed).toBeTruthy()
+    })
+
+    test('should return false if the no planet was deleted', async () => {
+      const sut = makeSut()
+      const removed = await sut.remove('60cf8952bc34198556cdd426')
+      expect(removed).toBeFalsy()
     })
   })
 })

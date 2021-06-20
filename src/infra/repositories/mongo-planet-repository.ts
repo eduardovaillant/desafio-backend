@@ -3,7 +3,6 @@ import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, 
 import { PlanetModel } from '../../domain/models'
 
 import { ObjectID } from 'mongodb'
-
 export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository {
   async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
@@ -32,10 +31,7 @@ export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByN
   async list (): Promise<PlanetModel[]> {
     const planetsCollection = await MongoHelper.getCollection('planets')
     const result = await planetsCollection.find({}).toArray()
-    if (result) {
-      return MongoHelper.mapCollection(result)
-    }
-    return []
+    return MongoHelper.mapCollection(result)
   }
 
   async remove (id: string): Promise<boolean> {
