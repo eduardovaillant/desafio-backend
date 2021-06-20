@@ -41,6 +41,9 @@ export const forbidden = (error: Error): HttpResponse => (
 export const serverError = (error: Error): HttpResponse => (
   {
     statusCode: 500,
-    body: error
+    body: {
+      error: 'InternalServerError',
+      detail: error.message
+    }
   }
 )

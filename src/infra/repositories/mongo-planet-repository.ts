@@ -2,6 +2,7 @@ import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepositor
 import { PlanetModel } from '../../domain/models'
 import { MongoHelper } from '../helpers'
 
+import { ObjectID } from 'mongodb'
 export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository {
   async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
@@ -20,7 +21,7 @@ export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByN
 
   async loadById (id: string): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
-    const result = await planetsCollection.findOne({ _id: id })
+    const result = await planetsCollection.findOne({ _id: new ObjectID(id) })
     if (result) {
       return MongoHelper.map(result)
     }

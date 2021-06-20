@@ -1,4 +1,4 @@
-import { PlanetModel } from 'domain/models'
+import { PlanetModel } from '../../domain/models'
 import { LoadPlanetById, LoadPlanetByName } from '../../domain/usecases'
 import { ok, serverError } from '../helpers'
 import { Controller, HttpRequest, HttpResponse } from '../protocols'

@@ -1,7 +1,7 @@
 import { LoadPlanetByNameController } from '../../../presentation/controllers'
 import { Controller } from '../../../presentation/protocols'
-import { makeLoadPlanetByName } from '../usecases'
+import { makeLoadPlanetById, makeLoadPlanetByName } from '../usecases'
 
 export const makeLoadPlanetByNameController = (): Controller => {
-  return new LoadPlanetByNameController(makeLoadPlanetByName())
+  return new LoadPlanetByNameController(makeLoadPlanetByName(), makeLoadPlanetById())
 }
