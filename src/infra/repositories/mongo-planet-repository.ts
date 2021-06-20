@@ -1,9 +1,9 @@
-import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepository, LoadPlanetByNameRepository } from '../../data/protocols'
+import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, LoadPlanetByIdRepository, LoadPlanetByNameRepository } from '../../data/protocols'
 import { PlanetModel } from '../../domain/models'
 import { MongoHelper } from '../helpers'
 
 import { ObjectID } from 'mongodb'
-export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository {
+export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository {
   async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
     const result = await planetsCollection.insertOne(addPlanetRepositoryParams)
@@ -26,5 +26,14 @@ export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByN
       return MongoHelper.map(result)
     }
     return null
+  }
+
+  async list (): Promise<PlanetModel[]> {
+    const planetsCollection = await MongoHelper.getCollection('planets')
+    const result = await planetsCollection.find({}).toArray()
+    if (result) {
+      return MongoHelper.mapCollection(result)
+    }
+    return []
   }
 }
