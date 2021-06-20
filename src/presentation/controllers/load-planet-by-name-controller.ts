@@ -1,29 +1,34 @@
-import { PlanetModel } from '../../domain/models'
-import { LoadPlanetById, LoadPlanetByName } from '../../domain/usecases'
+import { ListPlanets, LoadPlanetById, LoadPlanetByName } from '../../domain/usecases'
 import { ok, serverError } from '../helpers'
 import { Controller, HttpRequest, HttpResponse } from '../protocols'
 
 export class LoadPlanetByNameController implements Controller {
   constructor (
     private readonly loadPlanetByName: LoadPlanetByName,
-    private readonly loadPlanetById: LoadPlanetById
+    private readonly loadPlanetById: LoadPlanetById,
+    private readonly listPlanets: ListPlanets
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       // TODO pensar em uma forma melhor para organizar isso
-      const { name, id } = httpRequest.query
-      let planet: PlanetModel
+      if (httpRequest.query) {
+        const { name, id } = httpRequest.query
 
-      if (name) {
-        planet = await this.loadPlanetByName.loadByName(name)
+        if (name) {
+          const planet = await this.loadPlanetByName.loadByName(name)
+          return ok(planet)
+        }
+
+        if (id) {
+          const planet = await this.loadPlanetById.loadById(id)
+          return ok(planet)
+        }
       }
 
-      if (id) {
-        planet = await this.loadPlanetById.loadById(id)
-      }
+      const planets = await this.listPlanets.list()
 
-      return ok(planet)
+      return ok(planets)
     } catch (error) {
       console.error(error)
       return serverError(error)

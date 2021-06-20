@@ -1,6 +1,6 @@
 import { PlanetModel } from '../../../src/domain/models'
 import { mockPlanetModel } from '../mocks/planet'
-import { LoadPlanetById, LoadPlanetByName } from '.'
+import { ListPlanets, LoadPlanetById, LoadPlanetByName } from '.'
 
 export class LoadPlanetByNameSpy implements LoadPlanetByName {
   name: string
@@ -19,5 +19,13 @@ export class LoadPlanetByIdSpy implements LoadPlanetById {
   async loadById (id: string): Promise<PlanetModel> {
     this.id = id
     return this.planetModel
+  }
+}
+
+export class ListPlanetsSpy implements ListPlanets {
+  planets: PlanetModel[] = [mockPlanetModel(), mockPlanetModel()]
+
+  async list (): Promise<PlanetModel[]> {
+    return this.planets
   }
 }
