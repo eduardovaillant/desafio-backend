@@ -81,4 +81,13 @@ describe('MongoPlanetRepository', () => {
       expect(planet).toEqual([])
     })
   })
+
+  describe('remove()', () => {
+    test('should return true if the planets was deleted', async () => {
+      const createdPlanet = await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+      const sut = makeSut()
+      const removed = await sut.remove(createdPlanet.ops[0]._id)
+      expect(removed).toBeTruthy()
+    })
+  })
 })
