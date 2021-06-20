@@ -65,4 +65,20 @@ describe('MongoPlanetRepository', () => {
       expect(planet).toBeNull()
     })
   })
+
+  describe('list()', () => {
+    test('should return a list of planets on success', async () => {
+      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+      const sut = makeSut()
+      const planets = await sut.list()
+      expect(planets.length).toBe(2)
+    })
+
+    test('should return an empty list if there is no planets on the database', async () => {
+      const sut = makeSut()
+      const planet = await sut.list()
+      expect(planet).toEqual([])
+    })
+  })
 })
