@@ -1,9 +1,9 @@
-import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, LoadPlanetByIdRepository, LoadPlanetByNameRepository } from '../../data/protocols'
+import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, LoadPlanetByIdRepository, LoadPlanetByNameRepository, RemovePlanetRepository } from '../../data/protocols'
 import { PlanetModel } from '../../domain/models'
 import { MongoHelper } from '../helpers'
 
 import { ObjectID } from 'mongodb'
-export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository {
+export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository {
   async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
     const result = await planetsCollection.insertOne(addPlanetRepositoryParams)
@@ -35,5 +35,14 @@ export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByN
       return MongoHelper.mapCollection(result)
     }
     return []
+  }
+
+  async remove (id: string): Promise<boolean> {
+    const planetsCollection = await MongoHelper.getCollection('planets')
+    const result = await planetsCollection.deleteOne({ _id: new ObjectID(id) })
+    if (result.deletedCount === 1) {
+      return true
+    }
+    return false
   }
 }
