@@ -22,15 +22,15 @@ export class DbAddPlanet implements AddPlanet {
       throw new InvalidPlanetNameError()
     }
 
-    if (result.name !== addPlanetParams.name) {
+    if (result.name.toLowerCase() !== addPlanetParams.name.toLowerCase()) {
       throw new InvalidPlanetNameError()
     }
 
-    if (result.terrain !== addPlanetParams.terrain) {
+    if (result.terrain.toLowerCase() !== addPlanetParams.terrain.toLowerCase()) {
       throw new InvalidPlanetTerrainError()
     }
 
-    if (result.climate !== addPlanetParams.climate) {
+    if (result.climate.toLowerCase() !== addPlanetParams.climate.toLowerCase()) {
       throw new InvalidPlanetClimateError()
     }
 
