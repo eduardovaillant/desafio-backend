@@ -1,8 +1,7 @@
+import { AddPlanetRepositorySpy, LoadPlanetByNameRepositorySpy, mockAddPlanetRepositoryParams, SwapiClientSpy } from '../mocks'
+import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks'
+import { DbAddPlanet } from '../../../src/data/usecases'
 import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../../../src/data/errors'
-import { DbAddPlanet } from '../../../src/data/usecases/db-add-planet'
-import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
-import { AddPlanetRepositorySpy, LoadPlanetByNameRepositorySpy, mockAddPlanetRepositoryParams } from '../mocks/repositories'
-import { SwapiClientSpy } from '../mocks/swapi-client'
 
 type SutTypes = {
   sut: DbAddPlanet

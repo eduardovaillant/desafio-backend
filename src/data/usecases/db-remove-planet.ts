@@ -1,5 +1,5 @@
-import { RemovePlanetRepository } from 'data/protocols'
-import { RemovePlanet } from 'domain/usecases'
+import { RemovePlanetRepository } from '../protocols'
+import { RemovePlanet } from '../../domain/usecases'
 
 export class DbRemovePlanet implements RemovePlanet {
   constructor (

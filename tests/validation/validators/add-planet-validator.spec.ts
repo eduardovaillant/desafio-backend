@@ -1,5 +1,5 @@
+import { AddPlanetValidator } from '../../../src/validation/validators/add-planet-validator'
 import { RequiredParamError } from '../../../src/presentation/errors'
-import { AddPlanetValidator } from '../../../src/presentation/validation/validators/add-planet-validator'
 
 type SutTypes = {
   sut: AddPlanetValidator

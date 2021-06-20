@@ -1,8 +1,7 @@
+import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByNameRepository, SwapiClient } from '../protocols'
+import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../errors'
 import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
-import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByNameRepository } from '../protocols'
-import { SwapiClient } from '../protocols/swapi-client'
-import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../errors'
 
 export class DbAddPlanet implements AddPlanet {
   constructor (

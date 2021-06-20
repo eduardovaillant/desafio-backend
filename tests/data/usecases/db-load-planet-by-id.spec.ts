@@ -1,6 +1,6 @@
 import { DbLoadPlanetById } from '../../../src/data/usecases'
-import { mockPlanetModel } from '../../domain/mocks/planet'
-import { LoadPlanetByIdRepositorySpy } from '../mocks/repositories'
+import { LoadPlanetByIdRepositorySpy } from '../mocks'
+import { mockPlanetModel } from '../../domain/mocks'
 
 type SutTypes = {
   sut: DbLoadPlanetById
@@ -16,7 +16,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbLoadPlanetByName', () => {
+describe('DbLoadPlanetById', () => {
   test('should call LoadPlanetByIdRepository with correct value', async () => {
     const { sut, loadPlanetByIdRepositorySpy } = makeSut()
     await sut.loadById('any_id')

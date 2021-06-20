@@ -2,6 +2,25 @@ import { PlanetModel } from '../../../src/domain/models'
 import { LoadPlanetByNameRepository, AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository } from '../../../src/data/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
 
+export const mockAddPlanetRepositoryParams = (): AddPlanetRepositoryParams => (
+  {
+    name: 'any_name',
+    terrain: 'any_terrain',
+    climate: 'any_climate',
+    movie_apparitions: 1
+  }
+)
+
+export class AddPlanetRepositorySpy implements AddPlanetRepository {
+  planet: PlanetModel = mockPlanetModel()
+  addPlanetRepositoryParams: AddPlanetRepositoryParams
+
+  async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
+    this.addPlanetRepositoryParams = addPlanetRepositoryParams
+    return this.planet
+  }
+}
+
 export class LoadPlanetByNameRepositorySpy implements LoadPlanetByNameRepository {
   planet: PlanetModel = null
   name: string
@@ -9,16 +28,6 @@ export class LoadPlanetByNameRepositorySpy implements LoadPlanetByNameRepository
   async loadByName (name: string): Promise<PlanetModel> {
     this.name = name
     return this.planet
-  }
-}
-
-export class RemovePlanetRepositorySpy implements RemovePlanetRepository {
-  id: string
-  removed: boolean = true
-
-  async remove (id: string): Promise<boolean> {
-    this.id = id
-    return this.removed
   }
 }
 
@@ -40,21 +49,12 @@ export class LoadPlanetByIdRepositorySpy implements LoadPlanetByIdRepository {
   }
 }
 
-export class AddPlanetRepositorySpy implements AddPlanetRepository {
-  planet: PlanetModel = mockPlanetModel()
-  addPlanetRepositoryParams: AddPlanetRepositoryParams
+export class RemovePlanetRepositorySpy implements RemovePlanetRepository {
+  id: string
+  removed: boolean = true
 
-  async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
-    this.addPlanetRepositoryParams = addPlanetRepositoryParams
-    return this.planet
+  async remove (id: string): Promise<boolean> {
+    this.id = id
+    return this.removed
   }
 }
-
-export const mockAddPlanetRepositoryParams = (): AddPlanetRepositoryParams => (
-  {
-    name: 'any_name',
-    terrain: 'any_terrain',
-    climate: 'any_climate',
-    movie_apparitions: 1
-  }
-)

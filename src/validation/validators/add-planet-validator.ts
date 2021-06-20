@@ -1,5 +1,5 @@
-import { RequiredParamError } from '../../errors'
-import { Validation } from '../../protocols'
+import { RequiredParamError } from '../../presentation/errors'
+import { Validation } from '../../presentation/protocols'
 
 export class AddPlanetValidator implements Validation {
   validate (input: any): Error {

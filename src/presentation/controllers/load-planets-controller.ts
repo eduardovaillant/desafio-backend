@@ -1,8 +1,8 @@
-import { ListPlanets, LoadPlanetById, LoadPlanetByName } from '../../domain/usecases'
-import { ok, serverError } from '../helpers'
 import { Controller, HttpRequest, HttpResponse } from '../protocols'
+import { ok, serverError } from '../helpers'
+import { ListPlanets, LoadPlanetById, LoadPlanetByName } from '../../domain/usecases'
 
-export class LoadPlanetByNameController implements Controller {
+export class LoadPlanetsController implements Controller {
   constructor (
     private readonly loadPlanetByName: LoadPlanetByName,
     private readonly loadPlanetById: LoadPlanetById,
@@ -11,7 +11,6 @@ export class LoadPlanetByNameController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      // TODO pensar em uma forma melhor para organizar isso
       if (httpRequest.query) {
         const { name, id } = httpRequest.query
 

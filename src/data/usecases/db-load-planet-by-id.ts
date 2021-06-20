@@ -1,6 +1,6 @@
-import { LoadPlanetByIdRepository } from 'data/protocols'
-import { PlanetModel } from 'domain/models'
-import { LoadPlanetById } from 'domain/usecases'
+import { LoadPlanetByIdRepository } from '../protocols'
+import { PlanetModel } from '../../domain/models'
+import { LoadPlanetById } from '../../domain/usecases'
 
 export class DbLoadPlanetById implements LoadPlanetById {
   constructor (

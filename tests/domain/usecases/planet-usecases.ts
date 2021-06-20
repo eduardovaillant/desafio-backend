@@ -1,6 +1,16 @@
 import { PlanetModel } from '../../../src/domain/models'
+import { ListPlanets, LoadPlanetById, LoadPlanetByName, AddPlanet, AddPlanetParams, RemovePlanet } from '../../../src/domain/usecases'
 import { mockPlanetModel } from '../mocks/planet'
-import { ListPlanets, LoadPlanetById, LoadPlanetByName } from '.'
+
+export class AddPlanetSpy implements AddPlanet {
+  addPlanetParams: AddPlanetParams
+  planetModel: PlanetModel = mockPlanetModel()
+
+  async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
+    this.addPlanetParams = addPlanetParams
+    return this.planetModel
+  }
+}
 
 export class LoadPlanetByNameSpy implements LoadPlanetByName {
   name: string
@@ -27,5 +37,15 @@ export class ListPlanetsSpy implements ListPlanets {
 
   async list (): Promise<PlanetModel[]> {
     return this.planets
+  }
+}
+
+export class RemovePlanetSpy implements RemovePlanet {
+  id: string
+  removed: boolean = true
+
+  async remove (id: string): Promise<boolean> {
+    this.id = id
+    return this.removed
   }
 }

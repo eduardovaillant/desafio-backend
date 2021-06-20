@@ -1,11 +1,11 @@
-import { LoadPlanetByNameController } from '../../../src/presentation/controllers'
+import { LoadPlanetsController } from '../../../src/presentation/controllers'
 import { serverError, ok } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
-import { ListPlanetsSpy, LoadPlanetByIdSpy, LoadPlanetByNameSpy } from '../../domain/usecases/load-planet-by-name'
+import { ListPlanetsSpy, LoadPlanetByIdSpy, LoadPlanetByNameSpy } from '../../domain/usecases'
 
 type SutTypes = {
-  sut: LoadPlanetByNameController
+  sut: LoadPlanetsController
   loadPlanetByNameSpy: LoadPlanetByNameSpy
   loadPlanetByIdSpy: LoadPlanetByIdSpy
   listPlanets: ListPlanetsSpy
@@ -15,7 +15,7 @@ const makeSut = (): SutTypes => {
   const loadPlanetByNameSpy = new LoadPlanetByNameSpy()
   const loadPlanetByIdSpy = new LoadPlanetByIdSpy()
   const listPlanets = new ListPlanetsSpy()
-  const sut = new LoadPlanetByNameController(loadPlanetByNameSpy, loadPlanetByIdSpy, listPlanets)
+  const sut = new LoadPlanetsController(loadPlanetByNameSpy, loadPlanetByIdSpy, listPlanets)
   return {
     sut,
     loadPlanetByNameSpy,
@@ -24,7 +24,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('LoadPlanetController', () => {
+describe('LoadPlanetsController', () => {
   describe('loadPlanetByName()', () => {
     const mockRequest = (): HttpRequest => (
       {

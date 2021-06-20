@@ -1,6 +1,6 @@
-import { ListPlanetsRepository } from 'data/protocols'
-import { PlanetModel } from 'domain/models'
-import { ListPlanets } from 'domain/usecases'
+import { ListPlanetsRepository } from '../protocols'
+import { PlanetModel } from '../../domain/models'
+import { ListPlanets } from '../../domain/usecases'
 
 export class DbListPlanets implements ListPlanets {
   constructor (

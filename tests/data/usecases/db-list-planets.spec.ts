@@ -1,5 +1,5 @@
 import { DbListPlanets } from '../../../src/data/usecases'
-import { ListPlanetsRepositorySpy } from '../mocks/repositories'
+import { ListPlanetsRepositorySpy } from '../mocks'
 
 type SutTypes = {
   sut: DbListPlanets
@@ -30,7 +30,7 @@ describe('DbListPlanets', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('should return the as list of planets on success', async () => {
+  test('should return a list of planets on success', async () => {
     const { sut } = makeSut()
     const result = await sut.list()
     expect(result.length).toBe(2)

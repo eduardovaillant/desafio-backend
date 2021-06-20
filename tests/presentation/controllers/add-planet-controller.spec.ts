@@ -2,7 +2,7 @@ import { AddPlanetController } from '../../../src/presentation/controllers'
 import { badRequest, serverError, created, forbidden } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks/planet'
-import { AddPlanetSpy } from '../../domain/usecases/add-planet'
+import { AddPlanetSpy } from '../../domain/usecases'
 import { ValidationSpy } from '../mocks/validation'
 
 const mockRequest = (): HttpRequest => (

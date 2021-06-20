@@ -1,6 +1,6 @@
-import { RemovePlanet } from '../../domain/usecases'
-import { ok, serverError } from '../helpers'
 import { Controller, HttpRequest, HttpResponse } from '../protocols'
+import { ok, serverError } from '../helpers'
+import { RemovePlanet } from '../../domain/usecases'
 
 export class RemovePlanetController implements Controller {
   constructor (

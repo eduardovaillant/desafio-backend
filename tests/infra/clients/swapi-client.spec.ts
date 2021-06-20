@@ -1,5 +1,5 @@
-import { mockSwapiPlanetReturn, mockSwapiReturn } from '../../data/mocks/swapi-client'
 import { SwapiClientImpl } from '../../../src/infra/clients/swapi-client'
+import { mockSwapiPlanetReturn, mockSwapiReturn } from '../../data/mocks'
 
 import axios from 'axios'
 

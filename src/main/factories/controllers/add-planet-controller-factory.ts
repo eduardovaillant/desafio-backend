@@ -1,6 +1,6 @@
 import { AddPlanetController } from '../../../presentation/controllers'
 import { Controller } from '../../../presentation/protocols'
-import { AddPlanetValidator } from '../../../presentation/validation/validators'
+import { AddPlanetValidator } from '../../../validation/validators'
 import { makeAddPlanet } from '../usecases/add-planet-factory'
 
 export const makeAddPlanetController = (): Controller => {

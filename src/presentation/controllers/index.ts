@@ -1,3 +1,3 @@
 export * from './add-planet-controller'
-export * from './load-planet-by-name-controller'
+export * from './load-planets-controller'
 export * from './remove-planet-controller'

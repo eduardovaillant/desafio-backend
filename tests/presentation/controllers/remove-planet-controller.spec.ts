@@ -1,7 +1,7 @@
 import { RemovePlanetController } from '../../../src/presentation/controllers'
 import { serverError, ok } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
-import { RemovePlanetSpy } from '../../domain/usecases/remove-planet'
+import { RemovePlanetSpy } from '../../domain/usecases'
 
 type SutTypes = {
   sut: RemovePlanetController

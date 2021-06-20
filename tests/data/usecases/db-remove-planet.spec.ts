@@ -1,5 +1,5 @@
 import { DbRemovePlanet } from '../../../src/data/usecases'
-import { RemovePlanetRepositorySpy } from '../mocks/repositories'
+import { RemovePlanetRepositorySpy } from '../mocks'
 
 type SutTypes = {
   sut: DbRemovePlanet

@@ -1,6 +1,6 @@
 import { DbLoadPlanetByName } from '../../../src/data/usecases'
-import { mockPlanetModel } from '../../domain/mocks/planet'
-import { LoadPlanetByNameRepositorySpy } from '../mocks/repositories'
+import { LoadPlanetByNameRepositorySpy } from '../mocks'
+import { mockPlanetModel } from '../../domain/mocks'
 
 type SutTypes = {
   sut: DbLoadPlanetByName

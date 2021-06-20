@@ -1,6 +1,6 @@
-import { LoadPlanetByNameRepository } from 'data/protocols'
-import { PlanetModel } from 'domain/models'
-import { LoadPlanetByName } from 'domain/usecases'
+import { LoadPlanetByNameRepository } from '../protocols'
+import { PlanetModel } from '../../domain/models'
+import { LoadPlanetByName } from '../../domain/usecases'
 
 export class DbLoadPlanetByName implements LoadPlanetByName {
   constructor (
