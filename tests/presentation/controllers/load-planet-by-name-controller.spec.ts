@@ -2,26 +2,29 @@ import { LoadPlanetByNameController } from '../../../src/presentation/controller
 import { serverError, ok } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
-import { LoadPlanetByIdSpy, LoadPlanetByNameSpy } from '../../domain/usecases/load-planet-by-name'
+import { ListPlanetsSpy, LoadPlanetByIdSpy, LoadPlanetByNameSpy } from '../../domain/usecases/load-planet-by-name'
 
 type SutTypes = {
   sut: LoadPlanetByNameController
   loadPlanetByNameSpy: LoadPlanetByNameSpy
   loadPlanetByIdSpy: LoadPlanetByIdSpy
+  listPlanets: ListPlanetsSpy
 }
 
 const makeSut = (): SutTypes => {
   const loadPlanetByNameSpy = new LoadPlanetByNameSpy()
   const loadPlanetByIdSpy = new LoadPlanetByIdSpy()
-  const sut = new LoadPlanetByNameController(loadPlanetByNameSpy, loadPlanetByIdSpy)
+  const listPlanets = new ListPlanetsSpy()
+  const sut = new LoadPlanetByNameController(loadPlanetByNameSpy, loadPlanetByIdSpy, listPlanets)
   return {
     sut,
     loadPlanetByNameSpy,
-    loadPlanetByIdSpy
+    loadPlanetByIdSpy,
+    listPlanets
   }
 }
 
-describe('AddPlanetController', () => {
+describe('LoadPlanetController', () => {
   describe('loadPlanetByName()', () => {
     const mockRequest = (): HttpRequest => (
       {
@@ -77,6 +80,28 @@ describe('AddPlanetController', () => {
       const { sut } = makeSut()
       const response = await sut.handle(mockRequest())
       expect(response).toEqual(ok(mockPlanetModel()))
+    })
+  })
+
+  describe('listPlanets()', () => {
+    test('should call ListPlanets', async () => {
+      const { sut, listPlanets } = makeSut()
+      const listSpy = jest.spyOn(listPlanets, 'list')
+      await sut.handle({})
+      expect(listSpy).toHaveBeenCalled()
+    })
+
+    test('should return 500 ListPlanets throws', async () => {
+      const { sut, listPlanets } = makeSut()
+      jest.spyOn(listPlanets, 'list').mockImplementationOnce(() => { throw new Error() })
+      const response = await sut.handle({})
+      expect(response).toEqual(serverError(new Error()))
+    })
+
+    test('should return 200 on success', async () => {
+      const { sut } = makeSut()
+      const response = await sut.handle({})
+      expect(response).toEqual(ok([mockPlanetModel(), mockPlanetModel()]))
     })
   })
 })
