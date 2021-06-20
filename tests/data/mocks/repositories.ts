@@ -1,5 +1,5 @@
 import { PlanetModel } from '../../../src/domain/models'
-import { LoadPlanetByNameRepository, AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepository, ListPlanetsRepository } from '../../../src/data/protocols'
+import { LoadPlanetByNameRepository, AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository } from '../../../src/data/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
 
 export class LoadPlanetByNameRepositorySpy implements LoadPlanetByNameRepository {
@@ -9,6 +9,16 @@ export class LoadPlanetByNameRepositorySpy implements LoadPlanetByNameRepository
   async loadByName (name: string): Promise<PlanetModel> {
     this.name = name
     return this.planet
+  }
+}
+
+export class RemovePlanetRepositorySpy implements RemovePlanetRepository {
+  id: string
+  removed: boolean = true
+
+  async remove (id: string): Promise<boolean> {
+    this.id = id
+    return this.removed
   }
 }
 
