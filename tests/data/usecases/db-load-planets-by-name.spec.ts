@@ -39,13 +39,13 @@ describe('DbloadPlanetsByName', () => {
   test('should return the correct next page when possible', async () => {
     const { sut } = makeSut()
     const result = await sut.loadByName('any_name', 1)
-    expect(result.next).toBe(`${env.baseUrl}?page=2`)
+    expect(result.next).toBe(`${env.baseUrl}?name=any_name&page=2`)
   })
 
   test('should return the correct previous page when possible', async () => {
     const { sut } = makeSut()
     const result = await sut.loadByName('any_name', 2)
-    expect(result.previous).toBe(`${env.baseUrl}?page=1`)
+    expect(result.previous).toBe(`${env.baseUrl}?name=any_name&page=1`)
   })
 
   test('should return count = 0 if there is no planets on the database', async () => {
