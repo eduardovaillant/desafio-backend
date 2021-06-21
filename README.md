@@ -10,6 +10,15 @@
 | `GET`     | /planets/?id=:id        | Busca um planeta pelo id   |
 | `DELETE`  | /planets/?id=:id        | Remove um planeta pelo id  |
 
+
+## Adicionando um Planeta
+```json
+{
+  "name"    : string,
+  "climate" : string,
+  "terrain" : string
+}
+```
 ## Produção
 
 http://18.117.220.193:3000/api/planets
