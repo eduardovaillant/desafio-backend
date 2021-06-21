@@ -1,2 +1,17 @@
 # Desafio Backend
-https://ci6.googleusercontent.com/proxy/hH3anIPi37J_hCimvXvvnpbIHogCKfBEOTV8H8irArtqxgzatfPmcNSjT9lCKfKCeAlK9KzI5fqPGG-_XSAD4h1tdWZgOpySfceRpT2WuZ-2_GRS2czq7lTjNO3wnl3OtzRd3U1EWMzDlg0HRfg6YfLzUvwbFotn=s0-d-e1-ft#http://img.americanas.com.br/gentegestao/2018/Com-interna/G&G/Recrutamento/Desafio_Star-Wars_back.png
+
+## Endpoints
+
+POST - /planets/ - Adiciona um novo planeta
+GET - /planets/?page=1 - Lista todos os planetas (obs: o page é opcional)
+GET - /planets/?name=1$page=1 - Busca um plenata pelo nome (obs: o page é opcional)
+GET - /planets/?id=:id - Busca um plenata pelo id 
+DELETE - /planets/?id=:id - Remove um planeta pelo id
+
+## Produção
+
+url: http://18.117.220.193:3000/api/planets
+
+## Banco de Dados
+
+Nesse projeto foi utilizado o MongoDB.
