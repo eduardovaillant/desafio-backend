@@ -58,11 +58,29 @@ export class ListPlanetsRepositorySpy implements ListPlanetsRepository {
 }
 
 export class LoadPlanetsByNameRepositorySpy implements LoadPlanetsByNameRepository {
-  planets: PlanetModel[] = [mockPlanetModel(), mockPlanetModel()]
+  planets: PlanetsModel = {
+    count: 11,
+    planets: [
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel()
+    ]
+  }
+
+  page: number
   name: string
 
-  async loadByName (name: string): Promise<PlanetModel[]> {
+  async loadByName (name: string, page: number): Promise<PlanetsModel> {
     this.name = name
+    this.page = page
     return this.planets
   }
 }

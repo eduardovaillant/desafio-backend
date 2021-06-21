@@ -59,6 +59,9 @@ describe('DbListPlanets', () => {
   test('should return a paginated result on success', async () => {
     const { sut } = makeSut()
     const result = await sut.list(1)
-    expect(result.count).toBe(11)
+    expect(result.count).toBeDefined()
+    expect(result.planets).toBeDefined()
+    expect(result.previous).toBeDefined()
+    expect(result.next).toBeDefined()
   })
 })
