@@ -3,6 +3,7 @@ import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, 
 import { PlanetModel } from '../../domain/models'
 
 import { ObjectID } from 'mongodb'
+
 export class MongoPlanetRepository implements AddPlanetRepository, CheckPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository, LoadPlanetsByNameRepository {
   private readonly nPerPage: number = 10
 
@@ -27,10 +28,18 @@ export class MongoPlanetRepository implements AddPlanetRepository, CheckPlanetBy
     return null
   }
 
-  async loadByName (name: string): Promise<PlanetModel[]> {
+  async loadByName (name: string, page: number): Promise<PlanetsModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
-    const result = await planetsCollection.find({ name: { $regex: name, $options: 'i' } }).toArray()
-    return MongoHelper.mapCollection(result)
+    const count = await planetsCollection.countDocuments({ name: { $regex: name, $options: 'i' } })
+    const result = await planetsCollection.find({ name: { $regex: name, $options: 'i' } })
+      .skip(page > 1 ? ((page - 1) * this.nPerPage) : 0)
+      .limit(this.nPerPage)
+      .toArray()
+    const planets = MongoHelper.mapCollection(result)
+    return {
+      count,
+      planets
+    }
   }
 
   async list (page: number): Promise<PlanetsModel> {

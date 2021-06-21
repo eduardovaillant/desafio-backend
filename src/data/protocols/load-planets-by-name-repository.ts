@@ -1,5 +1,5 @@
-import { PlanetModel } from '../../domain/models'
+import { PlanetsModel } from './list-planets-repository'
 
 export interface LoadPlanetsByNameRepository {
-  loadByName: (name: string) => Promise<PlanetModel[]>
+  loadByName: (name: string, page: number) => Promise<PlanetsModel>
 }

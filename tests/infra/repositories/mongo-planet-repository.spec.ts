@@ -11,6 +11,11 @@ const makeSut = (): MongoPlanetRepository => {
 }
 
 describe('MongoPlanetRepository', () => {
+  const planets = [mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
+    mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
+    mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
+    mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams()]
+
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -66,27 +71,30 @@ describe('MongoPlanetRepository', () => {
   })
 
   describe('loadByName()', () => {
-    test('should return a list of planets on success', async () => {
-      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
-      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+    test('should return the first page on success', async () => {
+      await planetCollection.insertMany(planets)
       const sut = makeSut()
-      const planets = await sut.loadByName('any_name')
-      expect(planets.length).toBe(2)
+      const result = await sut.loadByName('any_name', 1)
+      expect(result.count).toBe(11)
+      expect(result.planets.length).toBe(10)
     })
 
-    test('should return an empty list if there is no planets on the database', async () => {
+    test('should return the next page on success', async () => {
+      await planetCollection.insertMany(planets)
       const sut = makeSut()
-      const planet = await sut.loadByName('any_name')
-      expect(planet).toEqual([])
+      const result = await sut.loadByName('any_name', 2)
+      expect(result.count).toBe(11)
+      expect(result.planets.length).toBe(1)
+    })
+
+    test('should return count = 0 if there is no planets on the database', async () => {
+      const sut = makeSut()
+      const result = await sut.loadByName('any_name', 1)
+      expect(result.count).toBe(0)
     })
   })
 
   describe('list()', () => {
-    const planets = [mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
-      mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
-      mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
-      mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams()]
-
     test('should return the first page on success', async () => {
       await planetCollection.insertMany(planets)
       const sut = makeSut()
