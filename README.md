@@ -24,7 +24,9 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-## Responses
+## Success Responses
+
+## Error Responses
 
 ### `403` - Planeta já existe no Banco de Dados 
 ```json
@@ -34,7 +36,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O nome do planeta é obrigatório
+### `400` - O nome do planeta é obrigatório
 ```json
 {
   "error": "RequiredParamError",
@@ -42,7 +44,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O nome do planeta é inválido
+### `403` - O nome do planeta é inválido
 ```json
 {
   "error": "InvalidPlanetDataError",
@@ -50,7 +52,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O terreno do planeta é obrigatório
+### `400` - O terreno do planeta é obrigatório
 ```json
 {
   "error": "RequiredParamError",
@@ -58,23 +60,14 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O terreno do planeta é inválido
+### `403` -  O terreno do planeta é inválido
 ```json
 {
   "error": "InvalidPlanetDataError",
   "detail": "The planet terrain is invalid!"
 }
 ```
-
-### O nome do planeta é obrigatório
-```json
-{
-  "error": "InvalidPlanetDataError",
-  "detail": "The planet name is invalid!"
-}
-```
-
-### O clima do planeta é obrigatório
+### `400` - O clima do planeta é obrigatório
 ```json
 {
   "error": "RequiredParamError",
@@ -82,8 +75,28 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
+### `400` - O clima do planeta é inválido
+```json
+{
+  "error": "InvalidPlanetDataError",
+  "detail": "The planet climate is invalid!"
+}
+```
 
+### `404` - Not Found
+```json
+{
+  "detail": "Not found"
+}
+```
 
+### `500` - Internal Server Error
+```json
+{
+  "error": "InternalServerError",
+  "detail": "Message"
+}
+```
 ## Banco de Dados
 
 Neste projeto foi utilizado o MongoDB.
