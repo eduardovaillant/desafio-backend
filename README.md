@@ -26,7 +26,7 @@ http://18.117.220.193:3000/api/planets
 
 ## Responses
 
-### Planeta já existe no Banco de Dados
+### `403` - Planeta já existe no Banco de Dados 
 ```json
 {
   "error": "PlanetAlreadyExistsError",
@@ -34,7 +34,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O Nome do planeta é obrigatório
+### O nome do planeta é obrigatório
 ```json
 {
   "error": "RequiredParamError",
@@ -42,7 +42,15 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O Terreno do planeta é obrigatório
+### O nome do planeta é inválido
+```json
+{
+  "error": "InvalidPlanetDataError",
+  "detail": "The planet name is invalid!"
+}
+```
+
+### O terreno do planeta é obrigatório
 ```json
 {
   "error": "RequiredParamError",
@@ -50,7 +58,23 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### O Clima do planeta é obrigatório
+### O terreno do planeta é inválido
+```json
+{
+  "error": "InvalidPlanetDataError",
+  "detail": "The planet terrain is invalid!"
+}
+```
+
+### O nome do planeta é obrigatório
+```json
+{
+  "error": "InvalidPlanetDataError",
+  "detail": "The planet name is invalid!"
+}
+```
+
+### O clima do planeta é obrigatório
 ```json
 {
   "error": "RequiredParamError",
