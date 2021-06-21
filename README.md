@@ -1,5 +1,9 @@
 # Desafio Backend
 
+## Produção
+
+http://18.117.220.193:3000/api/planets
+
 ## Endpoints
 
 |  Método   |          Rota           |         Descrição          |
@@ -19,9 +23,42 @@
   "terrain" : string
 }
 ```
-## Produção
 
-http://18.117.220.193:3000/api/planets
+## Responses
+
+### Planeta já existe no Banco de Dados
+```json
+{
+  "error": "PlanetAlreadyExistsError",
+  "detail": "The planet already exists in the database!"
+}
+```
+
+### O Nome do planeta é obrigatório
+```json
+{
+  "error": "RequiredParamError",
+  "detail": "The param name is required!"
+}
+```
+
+### O Terreno do planeta é obrigatório
+```json
+{
+  "error": "RequiredParamError",
+  "detail": "The param terrain is required!"
+}
+```
+
+### O Clima do planeta é obrigatório
+```json
+{
+  "error": "RequiredParamError",
+  "detail": "The param climate is required!"
+}
+```
+
+
 
 ## Banco de Dados
 
