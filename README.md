@@ -9,7 +9,7 @@
 * `DELETE` | /planets/?id=:id        | Remove um planeta pelo id
 
 |  Método   |          Rota           |         Descrição          |
-|-----------|:-----------------------:|---------------------------:|
+|:---------:|:-----------------------:|:--------------------------:|
 | `POST`    | /planets/               | Adiciona um novo planeta   |
 | `GET`     | /planets/?page=1        | Lista todos os planetas    |
 | `GET`     | /planets/?name=1$page=1 | Busca um planeta pelo nome |
