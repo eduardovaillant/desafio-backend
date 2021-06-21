@@ -1,5 +1,5 @@
 import { PlanetModel } from '../../../src/domain/models'
-import { ListPlanets, LoadPlanetById, LoadPlanetByName, AddPlanet, AddPlanetParams, RemovePlanet } from '../../../src/domain/usecases'
+import { ListPlanets, LoadPlanetById, LoadPlanetsByName, AddPlanet, AddPlanetParams, RemovePlanet } from '../../../src/domain/usecases'
 import { mockPlanetModel } from '../mocks/planet'
 
 export class AddPlanetSpy implements AddPlanet {
@@ -12,11 +12,11 @@ export class AddPlanetSpy implements AddPlanet {
   }
 }
 
-export class LoadPlanetByNameSpy implements LoadPlanetByName {
+export class LoadPlanetsByNameSpy implements LoadPlanetsByName {
   name: string
-  planetModel: PlanetModel = mockPlanetModel()
+  planetModel: PlanetModel[] = [mockPlanetModel()]
 
-  async loadByName (name: string): Promise<PlanetModel> {
+  async loadByName (name: string): Promise<PlanetModel[]> {
     this.name = name
     return this.planetModel
   }

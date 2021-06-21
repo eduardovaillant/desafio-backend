@@ -1,10 +1,10 @@
 import { Controller, HttpRequest, HttpResponse } from '../protocols'
 import { ok, serverError } from '../helpers'
-import { ListPlanets, LoadPlanetById, LoadPlanetByName } from '../../domain/usecases'
+import { ListPlanets, LoadPlanetById, LoadPlanetsByName } from '../../domain/usecases'
 
 export class LoadPlanetsController implements Controller {
   constructor (
-    private readonly loadPlanetByName: LoadPlanetByName,
+    private readonly LoadPlanetsByName: LoadPlanetsByName,
     private readonly loadPlanetById: LoadPlanetById,
     private readonly listPlanets: ListPlanets
   ) {}
@@ -15,8 +15,8 @@ export class LoadPlanetsController implements Controller {
         const { name, id } = httpRequest.query
 
         if (name) {
-          const planet = await this.loadPlanetByName.loadByName(name)
-          return ok(planet)
+          const planets = await this.LoadPlanetsByName.loadByName(name)
+          return ok(planets)
         }
 
         if (id) {

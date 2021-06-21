@@ -2,30 +2,30 @@ import { LoadPlanetsController } from '../../../src/presentation/controllers'
 import { serverError, ok } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
-import { ListPlanetsSpy, LoadPlanetByIdSpy, LoadPlanetByNameSpy } from '../../domain/usecases'
+import { ListPlanetsSpy, LoadPlanetByIdSpy, LoadPlanetsByNameSpy } from '../../domain/usecases'
 
 type SutTypes = {
   sut: LoadPlanetsController
-  loadPlanetByNameSpy: LoadPlanetByNameSpy
+  loadPlanetsByNameSpy: LoadPlanetsByNameSpy
   loadPlanetByIdSpy: LoadPlanetByIdSpy
   listPlanets: ListPlanetsSpy
 }
 
 const makeSut = (): SutTypes => {
-  const loadPlanetByNameSpy = new LoadPlanetByNameSpy()
+  const loadPlanetsByNameSpy = new LoadPlanetsByNameSpy()
   const loadPlanetByIdSpy = new LoadPlanetByIdSpy()
   const listPlanets = new ListPlanetsSpy()
-  const sut = new LoadPlanetsController(loadPlanetByNameSpy, loadPlanetByIdSpy, listPlanets)
+  const sut = new LoadPlanetsController(loadPlanetsByNameSpy, loadPlanetByIdSpy, listPlanets)
   return {
     sut,
-    loadPlanetByNameSpy,
+    loadPlanetsByNameSpy,
     loadPlanetByIdSpy,
     listPlanets
   }
 }
 
 describe('LoadPlanetsController', () => {
-  describe('loadPlanetByName()', () => {
+  describe('loadPlanetsByName()', () => {
     const mockRequest = (): HttpRequest => (
       {
         query: {
@@ -34,15 +34,15 @@ describe('LoadPlanetsController', () => {
       }
     )
 
-    test('should call LoadPlanetByName with correct value', async () => {
-      const { sut, loadPlanetByNameSpy } = makeSut()
+    test('should call LoadPlanetsByName with correct value', async () => {
+      const { sut, loadPlanetsByNameSpy } = makeSut()
       await sut.handle(mockRequest())
-      expect(loadPlanetByNameSpy.name).toEqual('any_name')
+      expect(loadPlanetsByNameSpy.name).toEqual('any_name')
     })
 
     test('should return 500 LoadPlanetByName throws', async () => {
-      const { sut, loadPlanetByNameSpy } = makeSut()
-      jest.spyOn(loadPlanetByNameSpy, 'loadByName').mockImplementationOnce(() => { throw new Error() })
+      const { sut, loadPlanetsByNameSpy } = makeSut()
+      jest.spyOn(loadPlanetsByNameSpy, 'loadByName').mockImplementationOnce(() => { throw new Error() })
       const response = await sut.handle(mockRequest())
       expect(response).toEqual(serverError(new Error()))
     })
@@ -50,7 +50,7 @@ describe('LoadPlanetsController', () => {
     test('should return 200 on success', async () => {
       const { sut } = makeSut()
       const response = await sut.handle(mockRequest())
-      expect(response).toEqual(ok(mockPlanetModel()))
+      expect(response).toEqual(ok([mockPlanetModel()]))
     })
   })
 
