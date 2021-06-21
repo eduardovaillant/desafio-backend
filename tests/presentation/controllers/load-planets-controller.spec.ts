@@ -1,5 +1,5 @@
 import { LoadPlanetsController } from '../../../src/presentation/controllers'
-import { serverError, ok } from '../../../src/presentation/helpers'
+import { serverError, ok, notFound } from '../../../src/presentation/helpers'
 import { HttpRequest } from '../../../src/presentation/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
 import { ListPlanetsSpy, LoadPlanetByIdSpy, LoadPlanetsByNameSpy } from '../../domain/usecases'
@@ -84,11 +84,16 @@ describe('LoadPlanetsController', () => {
   })
 
   describe('listPlanets()', () => {
-    test('should call ListPlanets', async () => {
+    test('should call ListPlanets if no page was passed', async () => {
       const { sut, listPlanets } = makeSut()
-      const listSpy = jest.spyOn(listPlanets, 'list')
-      await sut.handle({})
-      expect(listSpy).toHaveBeenCalled()
+      await sut.handle({ })
+      expect(listPlanets.page).toBe(1)
+    })
+
+    test('should call ListPlanets with the page number if page was passed', async () => {
+      const { sut, listPlanets } = makeSut()
+      await sut.handle({ query: { page: 2 } })
+      expect(listPlanets.page).toBe(2)
     })
 
     test('should return 500 ListPlanets throws', async () => {
@@ -96,6 +101,13 @@ describe('LoadPlanetsController', () => {
       jest.spyOn(listPlanets, 'list').mockImplementationOnce(() => { throw new Error() })
       const response = await sut.handle({})
       expect(response).toEqual(serverError(new Error()))
+    })
+
+    test('should return 404 if the page does not exists', async () => {
+      const { sut, listPlanets } = makeSut()
+      listPlanets.paginatedResults = null
+      const response = await sut.handle({})
+      expect(response).toEqual(notFound())
     })
 
     test('should return 200 on success', async () => {
