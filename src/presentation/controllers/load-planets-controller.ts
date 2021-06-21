@@ -12,16 +12,19 @@ export class LoadPlanetsController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       if (httpRequest.query) {
-        const { name, id } = httpRequest.query
+        const { name, id, page } = httpRequest.query
 
         if (name) {
-          const planets = await this.LoadPlanetsByName.loadByName(name)
-          return ok(planets)
+          const result = await this.LoadPlanetsByName.loadByName(name, page ? parseInt(page) : 1)
+          if (result) {
+            return ok(result)
+          }
+          return notFound()
         }
 
         if (id) {
-          const planet = await this.loadPlanetById.loadById(id)
-          return ok(planet)
+          const result = await this.loadPlanetById.loadById(id)
+          return ok(result)
         }
       }
 

@@ -14,11 +14,18 @@ export class AddPlanetSpy implements AddPlanet {
 
 export class LoadPlanetsByNameSpy implements LoadPlanetsByName {
   name: string
-  planetModel: PlanetModel[] = [mockPlanetModel()]
+  page: number
+  paginatedResults: PaginatedResults = {
+    count: 2,
+    planets: [mockPlanetModel(), mockPlanetModel()],
+    next: null,
+    previous: null
+  }
 
-  async loadByName (name: string): Promise<PlanetModel[]> {
+  async loadByName (name: string, page: number = 1): Promise<PaginatedResults> {
+    this.page = page
     this.name = name
-    return this.planetModel
+    return this.paginatedResults
   }
 }
 

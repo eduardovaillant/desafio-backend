@@ -47,10 +47,17 @@ describe('LoadPlanetsController', () => {
       expect(response).toEqual(serverError(new Error()))
     })
 
+    test('should return 404 if the page does not exists', async () => {
+      const { sut, loadPlanetsByNameSpy } = makeSut()
+      loadPlanetsByNameSpy.paginatedResults = null
+      const response = await sut.handle({ query: { page: 2, name: 'any_name' } })
+      expect(response).toEqual(notFound())
+    })
+
     test('should return 200 on success', async () => {
-      const { sut } = makeSut()
+      const { sut, loadPlanetsByNameSpy } = makeSut()
       const response = await sut.handle(mockRequest())
-      expect(response).toEqual(ok([mockPlanetModel()]))
+      expect(response).toEqual(ok(loadPlanetsByNameSpy.paginatedResults))
     })
   })
 
