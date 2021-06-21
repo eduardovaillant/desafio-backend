@@ -13,8 +13,8 @@ export class DbListPlanets implements ListPlanets {
     if (page <= qtdPages && page > 0) {
       const paginatedResults = {
         count: result.count,
-        next: page < qtdPages ? `${env.baseUrl}?page=${page + 1}` : null,
-        previous: page > 1 ? `${env.baseUrl}?page=${page - 1}` : null,
+        next: page < qtdPages ? `${env.baseUrl}?page=${+page + 1}` : null,
+        previous: page > 1 ? `${env.baseUrl}?page=${+page - 1}` : null,
         planets: result.planets
       }
       return paginatedResults
