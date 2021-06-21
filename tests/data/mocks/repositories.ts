@@ -33,8 +33,20 @@ export class CheckPlanetByNameRepositorySpy implements CheckPlanetByNameReposito
 
 export class ListPlanetsRepositorySpy implements ListPlanetsRepository {
   planets: PlanetsModel = {
-    count: 2,
-    planets: [mockPlanetModel(), mockPlanetModel()]
+    count: 11,
+    planets: [
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel(),
+      mockPlanetModel()
+    ]
   }
 
   page: number
