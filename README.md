@@ -18,8 +18,8 @@
 
 ## Produção
 
-url: http://18.117.220.193:3000/api/planets
+`http://18.117.220.193:3000/api/planets`
 
 ## Banco de Dados
 
-Nesse projeto foi utilizado o MongoDB.
+Neste projeto foi utilizado o MongoDB.
