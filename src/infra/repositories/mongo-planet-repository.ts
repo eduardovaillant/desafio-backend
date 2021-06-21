@@ -37,7 +37,7 @@ export class MongoPlanetRepository implements AddPlanetRepository, CheckPlanetBy
     const planetsCollection = await MongoHelper.getCollection('planets')
     const count = await planetsCollection.countDocuments()
     const result = await planetsCollection.find({})
-      .skip(page > 0 ? ((page - 1) * this.nPerPage) : 0)
+      .skip(page > 1 ? ((page - 1) * this.nPerPage) : 0)
       .limit(this.nPerPage)
       .toArray()
     const planets = MongoHelper.mapCollection(result)

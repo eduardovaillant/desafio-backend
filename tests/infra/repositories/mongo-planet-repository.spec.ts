@@ -82,13 +82,25 @@ describe('MongoPlanetRepository', () => {
   })
 
   describe('list()', () => {
-    test('should return a list of planets on success', async () => {
-      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
-      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+    const planets = [mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
+      mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
+      mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams(),
+      mockAddPlanetRepositoryParams(), mockAddPlanetRepositoryParams()]
+
+    test('should return the first page on success', async () => {
+      await planetCollection.insertMany(planets)
       const sut = makeSut()
       const result = await sut.list(1)
-      expect(result.count).toBe(2)
-      expect(result.planets.length).toBe(2)
+      expect(result.count).toBe(11)
+      expect(result.planets.length).toBe(10)
+    })
+
+    test('should return the next page on success', async () => {
+      await planetCollection.insertMany(planets)
+      const sut = makeSut()
+      const result = await sut.list(2)
+      expect(result.count).toBe(11)
+      expect(result.planets.length).toBe(1)
     })
 
     test('should return an empty list if there is no planets on the database', async () => {
