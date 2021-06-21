@@ -25,7 +25,58 @@ http://18.117.220.193:3000/api/planets
 ```
 
 ## Success Responses
+### `201` - Planeta criado com sucesso 
+```json
+{
+  data: {
+    "name"    : string,
+    "climate" : string,
+    "terrain" : string,
+    "movie_apparitions": number
+  }
+}
+```
 
+### `200` - Planeta Removido com Sucesso
+```json
+{
+  "data": {
+    "deleted": number,
+    "not_deleted": number
+  }
+}
+```
+
+### `200` - Buscar Planeta por ID
+```json
+{
+  data: {
+    "name"    : string,
+    "climate" : string,
+    "terrain" : string,
+    "movie_apparitions": number
+  }
+}
+```
+
+### `200` - Buscar Planeta por nome e listar planetas
+```json
+{
+  "data": {
+    "count": number,
+    "next": string,
+    "previous": string,
+    "planets": [
+      {
+        "name"    : string,
+        "climate" : string,
+        "terrain" : string,
+        "movie_apparitions": number
+      }
+    ]
+  }
+}
+```
 ## Error Responses
 
 ### `403` - Planeta já existe no Banco de Dados 
