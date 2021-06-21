@@ -1,5 +1,12 @@
 import { PlanetModel } from '../models'
 
+export type PaginatedResults = {
+  count: number
+  next: string
+  previous: string
+  planets: PlanetModel[]
+}
+
 export interface ListPlanets {
-  list: () => Promise<PlanetModel[]>
+  list: (page?: number) => Promise<PaginatedResults>
 }

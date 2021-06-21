@@ -99,9 +99,9 @@ describe('LoadPlanetsController', () => {
     })
 
     test('should return 200 on success', async () => {
-      const { sut } = makeSut()
+      const { sut, listPlanets } = makeSut()
       const response = await sut.handle({})
-      expect(response).toEqual(ok([mockPlanetModel(), mockPlanetModel()]))
+      expect(response).toEqual(ok(listPlanets.paginatedResults))
     })
   })
 })

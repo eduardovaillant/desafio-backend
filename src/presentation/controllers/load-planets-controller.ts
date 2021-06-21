@@ -1,5 +1,5 @@
 import { Controller, HttpRequest, HttpResponse } from '../protocols'
-import { ok, serverError } from '../helpers'
+import { notFound, ok, serverError } from '../helpers'
 import { ListPlanets, LoadPlanetById, LoadPlanetsByName } from '../../domain/usecases'
 
 export class LoadPlanetsController implements Controller {
@@ -25,9 +25,11 @@ export class LoadPlanetsController implements Controller {
         }
       }
 
-      const planets = await this.listPlanets.list()
-
-      return ok(planets)
+      const result = await this.listPlanets.list()
+      if (result) {
+        return ok(result)
+      }
+      return notFound()
     } catch (error) {
       console.error(error)
       return serverError(error)

@@ -1,5 +1,5 @@
 import { PlanetModel } from '../../../src/domain/models'
-import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository, CheckPlanetByNameRepository, LoadPlanetsByNameRepository } from '../../../src/data/protocols'
+import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository, CheckPlanetByNameRepository, LoadPlanetsByNameRepository, PlanetsModel } from '../../../src/data/protocols'
 import { mockPlanetModel } from '../../domain/mocks/planet'
 
 export const mockAddPlanetRepositoryParams = (): AddPlanetRepositoryParams => (
@@ -32,9 +32,15 @@ export class CheckPlanetByNameRepositorySpy implements CheckPlanetByNameReposito
 }
 
 export class ListPlanetsRepositorySpy implements ListPlanetsRepository {
-  planets: PlanetModel[] = [mockPlanetModel(), mockPlanetModel()]
+  planets: PlanetsModel = {
+    count: 2,
+    planets: [mockPlanetModel(), mockPlanetModel()]
+  }
 
-  async list (): Promise<PlanetModel[]> {
+  page: number
+
+  async list (page: number): Promise<PlanetsModel> {
+    this.page = page
     return this.planets
   }
 }

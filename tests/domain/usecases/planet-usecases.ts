@@ -1,5 +1,5 @@
 import { PlanetModel } from '../../../src/domain/models'
-import { ListPlanets, LoadPlanetById, LoadPlanetsByName, AddPlanet, AddPlanetParams, RemovePlanet } from '../../../src/domain/usecases'
+import { ListPlanets, LoadPlanetById, LoadPlanetsByName, AddPlanet, AddPlanetParams, RemovePlanet, PaginatedResults } from '../../../src/domain/usecases'
 import { mockPlanetModel } from '../mocks/planet'
 
 export class AddPlanetSpy implements AddPlanet {
@@ -33,10 +33,15 @@ export class LoadPlanetByIdSpy implements LoadPlanetById {
 }
 
 export class ListPlanetsSpy implements ListPlanets {
-  planets: PlanetModel[] = [mockPlanetModel(), mockPlanetModel()]
+  paginatedResults: PaginatedResults = {
+    count: 2,
+    planets: [mockPlanetModel(), mockPlanetModel()],
+    next: null,
+    previous: null
+  }
 
-  async list (): Promise<PlanetModel[]> {
-    return this.planets
+  async list (page: number = 1): Promise<PaginatedResults> {
+    return this.paginatedResults
   }
 }
 

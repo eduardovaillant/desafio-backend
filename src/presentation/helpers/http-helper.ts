@@ -28,6 +28,15 @@ export const badRequest = (error: Error): HttpResponse => (
   }
 )
 
+export const notFound = (): HttpResponse => (
+  {
+    statusCode: 404,
+    body: {
+      detail: 'Not found'
+    }
+  }
+)
+
 export const forbidden = (error: Error): HttpResponse => (
   {
     statusCode: 403,
