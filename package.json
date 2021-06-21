@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eduardovaillant/twitter-parser.git"
+    "url": "git+https://github.com/eduardovaillant/desafio-backend"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eduardovaillant/twitter-parser/issues"
+    "url": "https://github.com/eduardovaillant/desafio-backend/issues"
   },
-  "homepage": "https://github.com/eduardovaillant/twitter-parser#readme",
+  "homepage": "https://github.com/eduardovaillant/desafio-backend#readme",
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.5",
     "@types/cors": "^2.8.10",
