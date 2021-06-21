@@ -34,19 +34,18 @@ describe('MongoPlanetRepository', () => {
     })
   })
 
-  describe('loadByName()', () => {
-    test('should return the planet if the planet exists in the database', async () => {
+  describe('checkByName()', () => {
+    test('should return true if the planet exists in the database', async () => {
       await planetCollection.insertOne(mockAddPlanetRepositoryParams())
       const sut = makeSut()
-      const planet = await sut.loadByName('any_name')
-      expect(planet.id).toBeTruthy()
-      expect(planet.name).toBe('any_name')
+      const result = await sut.checkByName('any_name')
+      expect(result).toBeTruthy()
     })
 
-    test('should return null if the planet does not exists in the database', async () => {
+    test('should return false if the planet does not exists in the database', async () => {
       const sut = makeSut()
-      const planet = await sut.loadByName('any_name')
-      expect(planet).toBeNull()
+      const result = await sut.checkByName('any_name')
+      expect(result).toBeFalsy()
     })
   })
 
@@ -63,6 +62,22 @@ describe('MongoPlanetRepository', () => {
       const sut = makeSut()
       const planet = await sut.loadById('60cf8952bc34198556cdd426')
       expect(planet).toBeNull()
+    })
+  })
+
+  describe('loadByName()', () => {
+    test('should return a list of planets on success', async () => {
+      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+      await planetCollection.insertOne(mockAddPlanetRepositoryParams())
+      const sut = makeSut()
+      const planets = await sut.loadByName('any_name')
+      expect(planets.length).toBe(2)
+    })
+
+    test('should return an empty list if there is no planets on the database', async () => {
+      const sut = makeSut()
+      const planet = await sut.loadByName('any_name')
+      expect(planet).toEqual([])
     })
   })
 

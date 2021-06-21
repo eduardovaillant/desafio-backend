@@ -1,6 +1,6 @@
 export * from './add-planet'
+export * from './check-planet-by-name'
 export * from './list-planets'
-export * from './load-planet-by-name'
 export * from './load-planet-by-id'
 export * from './load-planets-by-name'
 export * from './remove-planet'

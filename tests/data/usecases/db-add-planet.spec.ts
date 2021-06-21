@@ -1,38 +1,38 @@
-import { AddPlanetRepositorySpy, LoadPlanetByNameRepositorySpy, mockAddPlanetRepositoryParams, SwapiClientSpy } from '../mocks'
+import { AddPlanetRepositorySpy, CheckPlanetByNameRepositorySpy, mockAddPlanetRepositoryParams, SwapiClientSpy } from '../mocks'
 import { mockAddPlanetParams, mockPlanetModel } from '../../domain/mocks'
 import { DbAddPlanet } from '../../../src/data/usecases'
 import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../../../src/data/errors'
 
 type SutTypes = {
   sut: DbAddPlanet
-  loadPlanetByNameRepositorySpy: LoadPlanetByNameRepositorySpy
+  checkPlanetByNameRepositorySpy: CheckPlanetByNameRepositorySpy
   swapiClientSpy: SwapiClientSpy
   addPlanetRepositorySpy: AddPlanetRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
-  const loadPlanetByNameRepositorySpy = new LoadPlanetByNameRepositorySpy()
+  const checkPlanetByNameRepositorySpy = new CheckPlanetByNameRepositorySpy()
   const swapiClientSpy = new SwapiClientSpy()
   const addPlanetRepositorySpy = new AddPlanetRepositorySpy()
-  const sut = new DbAddPlanet(loadPlanetByNameRepositorySpy, swapiClientSpy, addPlanetRepositorySpy)
+  const sut = new DbAddPlanet(checkPlanetByNameRepositorySpy, swapiClientSpy, addPlanetRepositorySpy)
   return {
     sut,
-    loadPlanetByNameRepositorySpy,
+    checkPlanetByNameRepositorySpy,
     swapiClientSpy,
     addPlanetRepositorySpy
   }
 }
 
 describe('DbAddPlanet', () => {
-  test('should call LoadPlanetByNameRepository with correct values', async () => {
-    const { sut, loadPlanetByNameRepositorySpy } = makeSut()
+  test('should call CheckPlanetByNameRepository with correct values', async () => {
+    const { sut, checkPlanetByNameRepositorySpy } = makeSut()
     await sut.add(mockAddPlanetParams())
-    expect(loadPlanetByNameRepositorySpy.name).toBe(mockAddPlanetParams().name)
+    expect(checkPlanetByNameRepositorySpy.name).toBe(mockAddPlanetParams().name)
   })
 
   test('should throw a PlanetAlreadyExistsError if the planet already exists', async () => {
-    const { sut, loadPlanetByNameRepositorySpy } = makeSut()
-    loadPlanetByNameRepositorySpy.planet = mockPlanetModel()
+    const { sut, checkPlanetByNameRepositorySpy } = makeSut()
+    checkPlanetByNameRepositorySpy.result = true
     const promise = sut.add(mockAddPlanetParams())
     await expect(promise).rejects.toThrow(new PlanetAlreadyExistsError())
   })
@@ -77,7 +77,7 @@ describe('DbAddPlanet', () => {
     expect(addPlanetRepositorySpy.addPlanetRepositoryParams).toEqual(mockAddPlanetRepositoryParams())
   })
 
-  test('should call throw if AddPlanetRepository throws', async () => {
+  test('should throw if AddPlanetRepository throws', async () => {
     const { sut, addPlanetRepositorySpy } = makeSut()
     jest.spyOn(addPlanetRepositorySpy, 'add').mockImplementationOnce(() => { throw new Error() })
     const promise = sut.add(mockAddPlanetParams())

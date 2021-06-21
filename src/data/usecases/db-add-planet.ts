@@ -1,18 +1,18 @@
-import { AddPlanetRepository, AddPlanetRepositoryParams, LoadPlanetByNameRepository, SwapiClient } from '../protocols'
+import { AddPlanetRepository, AddPlanetRepositoryParams, CheckPlanetByNameRepository, SwapiClient } from '../protocols'
 import { InvalidPlanetTerrainError, InvalidPlanetNameError, InvalidPlanetClimateError, PlanetAlreadyExistsError } from '../errors'
 import { PlanetModel } from '../../domain/models'
 import { AddPlanet, AddPlanetParams } from '../../domain/usecases'
 
 export class DbAddPlanet implements AddPlanet {
   constructor (
-    private readonly loadPlanetByNameRepository: LoadPlanetByNameRepository,
+    private readonly CheckPlanetByNameRepository: CheckPlanetByNameRepository,
     private readonly swapiClient: SwapiClient,
     private readonly addPlanetRepository: AddPlanetRepository
   ) {}
 
   async add (addPlanetParams: AddPlanetParams): Promise<PlanetModel> {
-    const loadedPlanet = await this.loadPlanetByNameRepository.loadByName(addPlanetParams.name.toLowerCase())
-    if (loadedPlanet) {
+    const exists = await this.CheckPlanetByNameRepository.checkByName(addPlanetParams.name.toLowerCase())
+    if (exists) {
       throw new PlanetAlreadyExistsError()
     }
 

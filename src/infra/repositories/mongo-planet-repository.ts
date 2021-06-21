@@ -1,22 +1,20 @@
 import { MongoHelper } from '../helpers'
-import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, LoadPlanetByIdRepository, LoadPlanetByNameRepository, RemovePlanetRepository } from '../../data/protocols'
+import { AddPlanetRepository, AddPlanetRepositoryParams, ListPlanetsRepository, LoadPlanetByIdRepository, CheckPlanetByNameRepository, RemovePlanetRepository } from '../../data/protocols'
 import { PlanetModel } from '../../domain/models'
 
 import { ObjectID } from 'mongodb'
-export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository {
+import { LoadPlanetsByNameRepository } from 'data/protocols/load-planets-by-name-repository'
+export class MongoPlanetRepository implements AddPlanetRepository, CheckPlanetByNameRepository, LoadPlanetByIdRepository, ListPlanetsRepository, RemovePlanetRepository, LoadPlanetsByNameRepository {
   async add (addPlanetRepositoryParams: AddPlanetRepositoryParams): Promise<PlanetModel> {
     const planetsCollection = await MongoHelper.getCollection('planets')
     const result = await planetsCollection.insertOne(addPlanetRepositoryParams)
     return MongoHelper.map(result.ops[0])
   }
 
-  async loadByName (name: string): Promise<PlanetModel> {
+  async checkByName (name: string): Promise<boolean> {
     const planetsCollection = await MongoHelper.getCollection('planets')
     const result = await planetsCollection.findOne({ name })
-    if (result) {
-      return MongoHelper.map(result)
-    }
-    return null
+    return result !== null
   }
 
   async loadById (id: string): Promise<PlanetModel> {
@@ -26,6 +24,12 @@ export class MongoPlanetRepository implements AddPlanetRepository, LoadPlanetByN
       return MongoHelper.map(result)
     }
     return null
+  }
+
+  async loadByName (name: string): Promise<PlanetModel[]> {
+    const planetsCollection = await MongoHelper.getCollection('planets')
+    const result = await planetsCollection.find({ name: { $regex: name, $options: 'i' } }).toArray()
+    return MongoHelper.mapCollection(result)
   }
 
   async list (): Promise<PlanetModel[]> {

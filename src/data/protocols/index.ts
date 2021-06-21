@@ -1,6 +1,6 @@
 export * from './add-planet-repository'
+export * from './check-planet-by-name-repository'
 export * from './list-planets-repository'
 export * from './load-planet-by-id-repository'
-export * from './load-planet-by-name-repository'
 export * from './remove-planet-repository'
 export * from './swapi-client'
