@@ -1,5 +1,6 @@
 export * from './add-planet-factory'
 export * from './list-planets-factory'
 export * from './load-planet-by-id-factory'
+export * from './load-planets-by-name-factory'
 export * from './check-planet-by-name-factory'
 export * from './remove-planet-factory'
