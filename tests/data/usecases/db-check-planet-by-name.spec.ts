@@ -1,6 +1,5 @@
 import { DbCheckPlanetByName } from '../../../src/data/usecases'
 import { CheckPlanetByNameRepositorySpy } from '../mocks'
-import { mockPlanetModel } from '../../domain/mocks'
 
 type SutTypes = {
   sut: DbCheckPlanetByName
@@ -34,6 +33,6 @@ describe('DbCheckPlanetByName', () => {
     const { sut, checkPlanetByNameRepositorySpy } = makeSut()
     checkPlanetByNameRepositorySpy.result = true
     const result = await sut.checkByName('any_name')
-    expect(result).toEqual(mockPlanetModel())
+    expect(result).toBeTruthy()
   })
 })

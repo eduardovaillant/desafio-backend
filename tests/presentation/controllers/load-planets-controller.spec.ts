@@ -40,7 +40,7 @@ describe('LoadPlanetsController', () => {
       expect(loadPlanetsByNameSpy.name).toEqual('any_name')
     })
 
-    test('should return 500 LoadPlanetByName throws', async () => {
+    test('should return 500 LoadPlanetsByName throws', async () => {
       const { sut, loadPlanetsByNameSpy } = makeSut()
       jest.spyOn(loadPlanetsByNameSpy, 'loadByName').mockImplementationOnce(() => { throw new Error() })
       const response = await sut.handle(mockRequest())
