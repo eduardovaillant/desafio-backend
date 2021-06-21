@@ -25,7 +25,7 @@ export class LoadPlanetsController implements Controller {
         }
       }
 
-      const result = await this.listPlanets.list()
+      const result = await this.listPlanets.list(httpRequest.query ? httpRequest.query.page : 1)
       if (result) {
         return ok(result)
       }

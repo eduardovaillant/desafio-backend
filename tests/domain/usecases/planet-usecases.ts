@@ -40,7 +40,10 @@ export class ListPlanetsSpy implements ListPlanets {
     previous: null
   }
 
+  page: number
+
   async list (page: number = 1): Promise<PaginatedResults> {
+    this.page = page
     return this.paginatedResults
   }
 }
