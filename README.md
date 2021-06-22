@@ -37,7 +37,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### `200` - Planeta Removido com Sucesso
+### `200` - Planeta removido com Sucesso
 ```json
 {
   "data": {
@@ -47,7 +47,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### `200` - Buscar Planeta por ID
+### `200` - Buscar planeta por ID
 ```json
 {
   data: {
@@ -59,7 +59,7 @@ http://18.117.220.193:3000/api/planets
 }
 ```
 
-### `200` - Buscar Planeta por nome e listar planetas
+### `200` - Buscar planeta por nome e listar planetas
 ```json
 {
   "data": {
