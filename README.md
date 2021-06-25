@@ -1,9 +1,5 @@
 # Desafio Backend
 
-## Produção
-
-http://18.117.220.193:3000/api/planets
-
 ## Endpoints
 
 |  Método   |          Rota               |         Descrição          |
